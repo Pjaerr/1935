@@ -11,9 +11,15 @@ public class CameraDrag : MonoBehaviour
 	{
 		CameraDefaultPos = Camera.main.transform.position; //CameraDefaultPos is equal to the main camera's position.
 	}
-
+    void Update()
+    {
+        Camera.main.transform.position = new Vector3(
+        Mathf.Clamp(Camera.main.transform.position.x, -400, 1050), Mathf.Clamp(Camera.main.transform.position.y, -780, 762), Camera.main.transform.position.z);
+    }
 	void LateUpdate () 
 	{
+        
+
 		if (Input.GetMouseButton (0)) 
 		{
 			//Assigns the difference between the mouse position and the camera position to variable 'difference'
