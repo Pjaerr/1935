@@ -1,16 +1,24 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.Networking;
 
 public class infantryUnit : MonoBehaviour
 {
-    public int parentNation; //When a unit is created, change it's parentNation number to the number of the nation that created it.
+    public int parentNation = 1; //When a unit is created, change it's parentNation number to the number of the nation that created it.
     public GameObject actionMenu; //The Panel containing any and all actions that can be taken surrounding this unit.
     public GameObject movementPin; //The default game object attached to a unit, to be placed. Is also cloned when placed instead of having a separate game object.
     private Vector2 movementPinPos;
     private bool placePinActive = false; //Controls whether or not the pin placement should be active.
     private bool moveUnitActive = false;
     public float movementSpeed = 2; //The speed the unit moves at. (Measured in units per Time.deltatime).
+    public Transform trans; //This unit's transform.
+
+
+    void Start()
+    {
+        trans = GetComponent<Transform>();
+    }
 
     void Update()
     {
@@ -22,7 +30,23 @@ public class infantryUnit : MonoBehaviour
         {
             moveUnit();
         }
+
+        //drawUnit();
     }
+
+    /*void drawUnit()
+    {
+        //Add checks here to see if the unit's parentNation is allies with the NationManager.nationValue, if so, show the unit.
+        //Add checks here to show unit no matter what the NationManager.nationValue is if this unit is within the distance of a province or unit owned by someone else.
+        if (parentNation != NationManager.nationValue)
+        {
+            GetComponent<SpriteRenderer>().enabled = false;
+        }
+        else if (parentNation == NationManager.nationValue)
+        {
+            GetComponent<SpriteRenderer>().enabled = true;
+        }
+    }*/
 
     void placePin() //Method is called in the Update() function if placePinActive is true.
     {
@@ -36,22 +60,24 @@ public class infantryUnit : MonoBehaviour
             movementPinPos = mouseCursorPos;
             placePinActive = false;
             movementPin.SetActive(false); //Deactivates the default movementPin gameobject so it cannot be seen anymore.
-            moveUnitActive = true;
+            moveUnitActive = true; //Makes moveUnitActive true so that the moveUnit function can be called in the Update() function.
         }
 
     }
     void moveUnit() //Method is called in the Update() function if moveUnitActive is true.
     {
         Vector2 currentPos = GetComponent<Transform>().transform.position; //Sets the units current position.
+
         //Moves the unit towards the movement pin that was placed down at the current global movementSpeed.
         GetComponent<Transform>().transform.position = Vector2.MoveTowards(currentPos, movementPinPos, movementSpeed * Time.deltaTime);
     }
 
     void OnMouseDown()
     {
-        actionMenu.SetActive(true); // Open action menu.
-
-        Debug.Log("Unit clicked!");
+        if (NationManager.nationValue == parentNation)
+        {
+            actionMenu.SetActive(true); // Open action menu.
+        }
     }
 
     public void closeActionMenu()
@@ -61,10 +87,10 @@ public class infantryUnit : MonoBehaviour
 
     public void moveUnitClicked() //Method is called when the 'Move Unit' button is pressed.
     {
+        Debug.Log("moveUnitClicked: Move Unit button was clicked");
         placePinActive = true;
         actionMenu.SetActive(false);
     }
-    
 
     /*Unit Movement Description
     Methods: OnMousedown(), closeActionMenu(), Update(), placePin(), moveUnit()
