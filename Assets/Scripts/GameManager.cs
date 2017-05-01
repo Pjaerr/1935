@@ -5,10 +5,6 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour 
 {
-	/*Nation Select UI */
-	[SerializeField] GameObject NationSelectPanel;
-	[SerializeField] private Dropdown NationSelectDropdown;
-
 	/*Nation Enumerator[s]*/
 	public enum Nation{Austria, Belgium, Denmark, Finland, France, Germany, Netherlands, Norway, Poland, Portugal, Spain, Sweden, Switzerland, UK};
 	public Nation thisNation;	//The Nation that this client is playing as.
@@ -33,10 +29,15 @@ public class GameManager : MonoBehaviour
 		DontDestroyOnLoad(gameObject);
 	}
 	
-	/*Will set the thisNation to the value chosen within the function. Currently uses a dropdown menu and will select the nation chosen.*/
-	public void NationSelect()
+	void Awake()
 	{
-		switch (NationSelectDropdown.value)
+		InitializeSingleton();
+	}
+	
+	/*Will set the thisNation to the value chosen within the function. Currently uses a dropdown menu and will select the nation chosen.*/
+	public void NationSelect(int index)
+	{
+		switch (index)
 		{
 			case 0:
 				thisNation = Nation.Austria;
@@ -85,16 +86,7 @@ public class GameManager : MonoBehaviour
 				thisNation = Nation.Austria;
 				break;
 		}
-		Debug.Log("Nation set to " + thisNation + " @ NationManager::NationSelect()");
-		NationSelectPanel.SetActive(false);
-	}
 
-	void Awake()
-	{
-		InitializeSingleton();
-	}
-	void Start () 
-	{
-		NationSelectPanel.SetActive(true);
+		Debug.Log("Nation set to " + thisNation + " @ NationManager::NationSelect()");
 	}
 }
