@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class CameraControl : MonoBehaviour
  {
+	 /*Components*/
 	private Camera thisCamera;
 	private Transform trans;
 	private Transform thisNationTransform;	//Access this nations transform via this.
-	private Vector3 mapSpace;
+
 
 	/*Mouse*/
 	Vector3 mouseOrigin;
@@ -18,8 +19,6 @@ public class CameraControl : MonoBehaviour
 	{
 		thisCamera = GetComponent<Camera>();
 		trans = GetComponent<Transform>();
-		mapSpace = new Vector3(50, 50);
-		mapSpace.z = 0.0f;
 		PanToNation();
 	}
 
@@ -37,21 +36,23 @@ public class CameraControl : MonoBehaviour
 
 	void CameraManipulation()
 	{
+		/*Makes sure that the camera is within bounds.
+		 Includes both position and orthographic size.*/
 		if (trans.position.x > 80)
 		{
-			trans.Translate(new Vector2(-10, 0));
+			trans.Translate(new Vector2(-thisCamera.orthographicSize, 0));
 		}
 		else if (trans.position.x < -80)
 		{
-			trans.Translate(new Vector2(10, 0));
+			trans.Translate(new Vector2(thisCamera.orthographicSize, 0));
 		}
 		if (trans.position.y > 50)
 		{
-			trans.Translate(new Vector2(0, -10));
+			trans.Translate(new Vector2(0, -thisCamera.orthographicSize));
 		}
 		else if (trans.position.y < -50)
 		{
-			trans.Translate(new Vector2(0, 10));
+			trans.Translate(new Vector2(0, thisCamera.orthographicSize));
 		}
 
 		if (thisCamera.orthographicSize < 2)
