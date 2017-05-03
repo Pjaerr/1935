@@ -5,8 +5,13 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour 
 {
+	/*World Map*/
+	[SerializeField] private Transform WorldMap;
+	private Transform[] nations;
+	[HideInInspector] public Transform thisNationTransform;
+
 	/*Nation Enumerator[s]*/
-	public enum Nation{Austria, Belgium, Denmark, Finland, France, Germany, Netherlands, Norway, Poland, Portugal, Spain, Sweden, Switzerland, UK};
+	public enum Nation{Austria, Belgium, Denmark, Finland, France, Germany, Netherlands, Norway, Poland, Portugal, Spain, Sweden, Switzerland, UK, SIreland};
 	public Nation thisNation;	//The Nation that this client is playing as.
 
 	public static GameManager singleton = null;	//Singleton instance.
@@ -33,60 +38,85 @@ public class GameManager : MonoBehaviour
 	{
 		InitializeSingleton();
 	}
-	
-	/*Will set the thisNation to the value chosen within the function. Currently uses a dropdown menu and will select the nation chosen.*/
-	public void NationSelect(int index)
+
+	void Start()
 	{
-		switch (index)
+		SetWorldMap();
+		SetThisNationTransform();
+	}
+
+	void Update()
+	{
+		/*KEEP FOR TESTING.*/
+		SetThisNationTransform();
+	}
+
+	/*Grabs all children Transforms of the referenced WorldMap object 
+	and assigns them to an array of Transforms called nations[].*/
+	void SetWorldMap()
+	{
+		nations = new Transform[WorldMap.childCount];	//nations[] is the same size as the number of children on WorldMap.
+
+		for (int i = 0; i < WorldMap.childCount; i++)
+		{	
+			nations[i] = WorldMap.GetChild(i);
+		}
+	}
+
+	/*Will set thisNationTransform to the transform in nations[] that represents the nation currently 
+	being played as. This can then be referenced by GameManager.singleton.thisNationTransform*/
+	void SetThisNationTransform()
+	{
+		switch (thisNation)
 		{
-			case 0:
-				thisNation = Nation.Austria;
+			case Nation.Belgium:
+				thisNationTransform = nations[1];
 				break;
-			case 1:
-				thisNation = Nation.Belgium;
+			case Nation.Netherlands:
+				thisNationTransform = nations[2];
 				break;
-			case 2:
-				thisNation = Nation.Denmark;
+			case Nation.France:
+				thisNationTransform = nations[3];
 				break;
-			case 3:
-				thisNation = Nation.Finland;
+			case Nation.Switzerland:
+				thisNationTransform = nations[4];
 				break;
-			case 4:
-				thisNation = Nation.France;
+			case Nation.Germany:
+				thisNationTransform = nations[5];
 				break;
-			case 5:
-				thisNation = Nation.Germany;
+			case Nation.Austria:
+				thisNationTransform = nations[6];
 				break;
-			case 6:
-				thisNation = Nation.Netherlands;
+			case Nation.Denmark:
+				thisNationTransform = nations[7];
 				break;
-			case 7:
-				thisNation = Nation.Norway;
+			case Nation.Finland:
+				thisNationTransform = nations[8];
 				break;
-			case 8:
-				thisNation = Nation.Poland;
+			case Nation.UK:
+				thisNationTransform = nations[9];
 				break;
-			case 9:
-				thisNation = Nation.Portugal;
+			case Nation.SIreland:
+				thisNationTransform = nations[10];
 				break;
-			case 10:
-				thisNation = Nation.Spain;
+			case Nation.Norway:
+				thisNationTransform = nations[11];
 				break;
-			case 11:
-				thisNation = Nation.Sweden;
+			case Nation.Poland:
+				thisNationTransform = nations[12];
 				break;
-			case 12:
-				thisNation = Nation.Switzerland;
+			case Nation.Portugal:
+				thisNationTransform = nations[13];
 				break;
-			case 13:
-				thisNation = Nation.UK;
+			case Nation.Spain:
+				thisNationTransform = nations[14];
+				break;
+			case Nation.Sweden:
+				thisNationTransform = nations[15];
 				break;
 			default:
-				Debug.Log("Unknown Nation. Setting thisNation to Austria");
-				thisNation = Nation.Austria;
+				Debug.Log("Unknown nation @ GameManager.cs::SetThisNation();");
 				break;
 		}
-
-		Debug.Log("Nation set to " + thisNation + " @ NationManager::NationSelect()");
 	}
 }

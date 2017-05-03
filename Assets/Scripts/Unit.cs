@@ -16,7 +16,7 @@ public class Unit : MonoBehaviour
 
 	[SerializeField] private GameObject unitUI;
 
-	private bool isVisible = false;
+	private bool isVisible = false;			//Check to see if visible before making it visible.
 	private bool isInteractable = false;
 	
 
