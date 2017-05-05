@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour 
 {
+	/*Default Attrbutes*/
+	public float defaultUnitMovementSpeed = 20.0f; //Default value to be set elsewhere as per time scaling.
+
 	/*World Map*/
 	[SerializeField] private Transform WorldMap;
 	private Transform[] nations;
