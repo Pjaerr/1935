@@ -10,16 +10,18 @@ public class Unit : MonoBehaviour
 	and letting child units increase/decrease the default movementSpeed by a scaling factor as needed. */
 	private float movementSpeed = 0.0f;
 
+	/*The Vector3 that the unit will move towards when Move() is called*/
+	Vector3 destination;
+
 	/*Factor by which to set this units movement speed. 
 	This should be the only value changed on inherited objects.*/
 	public float movementSpeedScalingFactor = 1.0f;	
 
-	/*The Vector2 that the unit will move towards when Move() is called*/
-	Vector2 destination;
-
 	/*COMPONENTS*/
 	private Transform trans; //This object's transform.
 	private SpriteRenderer spriteRenderer;	//This object's sprite renderer.
+	[SerializeField] private GameObject pinPrefab;	//The pin that will be instantiated.
+	private GameObject pin;	//The instantiated pin as a game object.
 
 	/*UI*/
 	[SerializeField] private GameObject unitUI;
@@ -30,6 +32,8 @@ public class Unit : MonoBehaviour
 	private bool isVisible = false;			//Check to see if visible before making it visible.
 	private bool isInteractable = false;
 	private bool isMoving = false;
+	private bool pinPlaced = false;	//Used to control pin placement.
+	private bool pinActive = false;	//Used to initiate pin placement.
 
 
 	/*MONOBEHAVOUR TEMPLATES*/
@@ -46,6 +50,10 @@ public class Unit : MonoBehaviour
 	}
 	public void unitUpdate()
 	{
+		if (pinActive)
+		{
+			PinPlacement();
+		}
 		if (isMoving)
 		{
 			Move();
@@ -95,17 +103,62 @@ public class Unit : MonoBehaviour
 		}
 	}
 
-	/*This function should be called to initiate movement, passing in a destination and setting
-	isMoving to true so that the actual movement can occur in unitUpdate().*/
-	public void StartMoving(Vector2 pos)
+	/*Starts the pin placement*/
+	public void placePin()
 	{
-		isMoving = true;
-		destination = pos;
+		pinActive = true;
+	}
+
+	/*Controls the pin placement*/
+	private void PinPlacement()
+	{
+		/*If a pin doesn't currently exist, instantiate one using the pin prefab attached to this unit.
+		If the mouse is clicked, set pinPlaced to true. If pinPlaced is true set the unit's destination
+		to the position of the pin, and set isMoving to true, setting the unit in motion. If pinPlaced is not true,
+		make the pin game object follow the mouse.*/
+
+		if (unitUI.activeSelf)
+		{
+			unitUI.SetActive(false);
+		}
+		if (!pin)
+		{
+			pin = Instantiate(pinPrefab, trans.position, Quaternion.identity) as GameObject;
+		}
+		else if (!pin.activeSelf)
+		{
+			pin.SetActive(true);
+			pinPlaced = false;
+		}
+
+		if (Input.GetMouseButtonDown(0))
+		{
+			pinPlaced = true;
+			pinActive = false;
+		}
+
+		if (pinPlaced)
+		{
+			isMoving = true;
+			destination = pin.transform.position;
+		}
+		else
+		{
+			Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+			mousePos.z = 0.0f;
+			pin.transform.position = mousePos;
+		}
 	}
 
 	/*Moves the unit towards the destination at the given movementSpeed*/
 	private void Move()
 	{
+		if (isMoving && trans.position == destination)
+		{
+			isMoving = false;
+			pin.SetActive(false);	//Rework in time to accomodate for Object Pooling.
+		}
+
 		float step = movementSpeed * Time.deltaTime; //Temporary movement value. Swap this out for predefined time value, so that the unit moves over time.
 		trans.position = Vector2.MoveTowards(trans.position, destination, step);
 	}
@@ -117,10 +170,5 @@ public class Unit : MonoBehaviour
 		{
 			unitUI.SetActive(isActive);
 		}
-	}
-	//TODO: Have seperate movement UI that is activated here.
-	public void DisplayMoveUI(bool isActive)
-	{
-		//moveUI.SetActive(isActive);
 	}
 }

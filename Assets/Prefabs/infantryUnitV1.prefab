@@ -340,6 +340,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeedScalingFactor: 1
+  pinPrefab: {fileID: 0}
   unitUI: {fileID: 1212511304698696}
   parentNation: 0
 --- !u!114 &114439334379641746

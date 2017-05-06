@@ -920,10 +920,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b849f74310833347bdc194a0aefc7a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultUnitMovementSpeed: 20
+  defaultUnitMovementSpeed: 1
   WorldMap: {fileID: 260136365}
   thisNationTransform: {fileID: 0}
-  thisNation: 0
+  thisNation: 13
 --- !u!4 &196779490
 Transform:
   m_ObjectHideFlags: 0
@@ -4281,11 +4281,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4884282929340398, guid: 4c210316ccced7945973c1ee44bd1c20, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 9.25
+      value: -22.79
       objectReference: {fileID: 0}
     - target: {fileID: 4884282929340398, guid: 4c210316ccced7945973c1ee44bd1c20, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 6.88
+      value: 14.7
       objectReference: {fileID: 0}
     - target: {fileID: 4884282929340398, guid: 4c210316ccced7945973c1ee44bd1c20, type: 2}
       propertyPath: m_LocalPosition.z
@@ -4310,6 +4310,50 @@ Prefab:
     - target: {fileID: 4884282929340398, guid: 4c210316ccced7945973c1ee44bd1c20, type: 2}
       propertyPath: m_RootOrder
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4219751851668096, guid: 4c210316ccced7945973c1ee44bd1c20, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114371553626034808, guid: 4c210316ccced7945973c1ee44bd1c20,
+        type: 2}
+      propertyPath: pin
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114371553626034808, guid: 4c210316ccced7945973c1ee44bd1c20,
+        type: 2}
+      propertyPath: pinPrefab
+      value: 
+      objectReference: {fileID: 1672319893159614, guid: bc35ff06b4258364986b26ece1a0f759,
+        type: 2}
+    - target: {fileID: 114565939454755450, guid: 4c210316ccced7945973c1ee44bd1c20,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: placePin
+      objectReference: {fileID: 0}
+    - target: {fileID: 114371553626034808, guid: 4c210316ccced7945973c1ee44bd1c20,
+        type: 2}
+      propertyPath: parentNation
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 1212511304698696, guid: 4c210316ccced7945973c1ee44bd1c20, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224876518048096546, guid: 4c210316ccced7945973c1ee44bd1c20,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224876518048096546, guid: 4c210316ccced7945973c1ee44bd1c20,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224876518048096546, guid: 4c210316ccced7945973c1ee44bd1c20,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4c210316ccced7945973c1ee44bd1c20, type: 2}
