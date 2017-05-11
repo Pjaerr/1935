@@ -17,6 +17,13 @@ public class GameManager : MonoBehaviour
 	public enum Nation{Austria, Belgium, Denmark, Finland, France, Germany, Netherlands, Norway, Poland, Portugal, Spain, Sweden, Switzerland, UK, SIreland};
 	public Nation thisNation;	//The Nation that this client is playing as.
 
+	/*Nation Values*/
+	[HideInInspector] public int happinessVal = 1;
+	[HideInInspector] public int economyVal = 1000;
+	[HideInInspector] public int foodVal = 500;
+	[HideInInspector] public int ironVal = 500;
+	[HideInInspector] public int coalVal = 500;
+
 	public static GameManager singleton = null;	//Singleton instance.
 
 	void InitializeSingleton()
