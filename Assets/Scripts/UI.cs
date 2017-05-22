@@ -3,20 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/*This UI class should be used to manage the data and referencing associated with any UI
+in the game that isn't a part of an instantiatiable object.*/
+
 public class UI : MonoBehaviour 
 {
-	/*UI ELEMENTS*/
-	//NATION
+	/*Array of UI Text elements pertaining to the 'always on screen' UI.
+	0 = Happiness
+	1 = Economy
+	2 = Food
+	3 = Iron
+	4 = Coal
+	*/
+	[SerializeField] private Text[] persistentUI;
+
+	[SerializeField] private Text[] provinceManagementUI;
+	[SerializeField] private GameObject provinceManagementUIParent;
+	[HideInInspector] public bool provinceUIActive = false;
+
 	[SerializeField] Text nationText;
 	[SerializeField] Image nationFlag;
-	[SerializeField] Text happinessText;
-	[SerializeField] Text economyText;
-	//RESOURCES
-	[SerializeField] Text foodText;
-	[SerializeField] Text ironText;
-	[SerializeField] Text coalText;
-
-	private Text valueToChange;
 
 	public static UI singleton = null;	//Singleton instance.
 
@@ -46,47 +52,59 @@ public class UI : MonoBehaviour
 	{
 		InitialiseValues();
 	}
+	
 	void InitialiseValues()
 	{
 		//nationText.text = GameManager.singleton.thisNation.ToString();
-		UpdateValue("happiness", GameManager.singleton.happinessVal);
-		UpdateValue("economy", GameManager.singleton.economyVal);
-		UpdateValue("food", GameManager.singleton.foodVal);
-		UpdateValue("iron", GameManager.singleton.ironVal);
-		UpdateValue("coal", GameManager.singleton.coalVal);
+		for (int i = 0; i < persistentUI.Length; i++)
+		{
+			UpdateValue(i, GameManager.singleton.nationValues[i], "persistentUI");
+		}
+		
 	}
-	void UpdateValue(string type, int val)
+	void UpdateValue(int valueToUpdate, float val, string type)
 	{
-		string sign;
+		string newValue;
 
 		if (val > 0)
 		{
-			sign = "+";
+			newValue = "+" + val.ToString();
 		}
 		else
 		{
-			sign = "-";
+			newValue = "-" + val.ToString();
 		}
 
-		switch(type)
+		if (type == "persistentUI")
 		{
-			case "happiness":
-				valueToChange = happinessText;
-				break;
-			case "economy":
-				valueToChange = economyText;
-				break;
-			case "food":
-				valueToChange = foodText;
-				break;
-			case "iron":
-				valueToChange = ironText;
-				break;
-			case "coal":
-				valueToChange = coalText;
-				break;
+			persistentUI[valueToUpdate].text = newValue;
 		}
+		else if (type == "provinceManagementUI")
+		{
+			provinceManagementUI[valueToUpdate].text = newValue;
+		}
+	}
 
-		valueToChange.text = sign + val.ToString();
+	/*This function should update the provinceManagementUI values as per the province that
+	has been activated using the UpdateValues() function. */
+	void LoadProvinceValues()
+	{
+
+	}
+
+	/*Either Activates or Deactivates the province management UI depending upon the
+	boolean passed in. If chosen to activate, it will call the LoadProvinceValues() function.*/
+	public void ActivateProvinceManagementUI(bool active)
+	{
+		provinceManagementUIParent.SetActive(active);
+		if (active)
+		{
+			provinceUIActive = true;
+			LoadProvinceValues();
+		}
+		else
+		{
+			provinceUIActive = false;
+		}
 	}
 }

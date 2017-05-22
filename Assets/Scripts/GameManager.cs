@@ -18,11 +18,7 @@ public class GameManager : MonoBehaviour
 	public Nation thisNation;	//The Nation that this client is playing as.
 
 	/*Nation Values*/
-	[HideInInspector] public int happinessVal = 1;
-	[HideInInspector] public int economyVal = 1000;
-	[HideInInspector] public int foodVal = 500;
-	[HideInInspector] public int ironVal = 500;
-	[HideInInspector] public int coalVal = 500;
+	[HideInInspector] public float[] nationValues;
 
 	public static GameManager singleton = null;	//Singleton instance.
 
@@ -51,6 +47,8 @@ public class GameManager : MonoBehaviour
 
 	void Start()
 	{
+		nationValues = new float[5] {1, 1000, 500, 500, 500};
+		Debug.Log(nationValues.Length);
 		SetWorldMap();
 		SetThisNationTransform();
 	}
