@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /*This UI class should be used to manage the data and referencing associated with any UI
-in the game that isn't a part of an instantiatiable object.*/
+in the game that isn't a part of an instantiatiable object. It shouldn't carry out any 
+actions that do not directly affect any UI elements.*/
 
 public class UI : MonoBehaviour 
 {
@@ -14,15 +15,24 @@ public class UI : MonoBehaviour
 	2 = Food
 	3 = Iron
 	4 = Coal
+	as assigned in the inspector.
 	*/
 	[SerializeField] private Text[] persistentUI;
 
-	[SerializeField] private Text[] provinceManagementUI;
-	[SerializeField] private GameObject provinceManagementUIParent;
+	/*Array of UI Text elements pertaining to the province management UI.
+	0 = Happiness
+	1 = Economy
+	2 = Food
+	3 = Iron
+	4 = Coal
+	5 = Population
+	*/
+	[SerializeField] private Text[] provinceUI;
+	[SerializeField] private GameObject provinceUIParent;	//The game object that holds the province management UI.
 	[HideInInspector] public bool provinceUIActive = false;
 
-	[SerializeField] Text nationText;
-	[SerializeField] Image nationFlag;
+	[SerializeField] Text nationText;	//The text that shows the name of the currently played nation.
+	[SerializeField] Image nationFlag;	//The UI image that shows the flag of the currently played nation.
 
 	public static UI singleton = null;	//Singleton instance.
 
@@ -53,15 +63,20 @@ public class UI : MonoBehaviour
 		InitialiseValues();
 	}
 	
+	/*Sets all default values for the persistent UI.*/
 	void InitialiseValues()
 	{
-		//nationText.text = GameManager.singleton.thisNation.ToString();
+		nationText.text = GameManager.singleton.thisNation.ToString();
 		for (int i = 0; i < persistentUI.Length; i++)
 		{
 			UpdateValue(i, GameManager.singleton.nationValues[i], "persistentUI");
 		}
 		
 	}
+
+	/*Updates the specified values on the specified UI elements with the given values.
+	Will also give a sign automatically depending upon whether the values updated value
+	is positive or negative. This function does not increment on a value, it only replaces it.*/
 	void UpdateValue(int valueToUpdate, float val, string type)
 	{
 		string newValue;
@@ -81,7 +96,7 @@ public class UI : MonoBehaviour
 		}
 		else if (type == "provinceManagementUI")
 		{
-			provinceManagementUI[valueToUpdate].text = newValue;
+			provinceUI[valueToUpdate].text = newValue;
 		}
 	}
 
@@ -89,14 +104,14 @@ public class UI : MonoBehaviour
 	has been activated using the UpdateValues() function. */
 	void LoadProvinceValues()
 	{
-
+		
 	}
 
 	/*Either Activates or Deactivates the province management UI depending upon the
 	boolean passed in. If chosen to activate, it will call the LoadProvinceValues() function.*/
 	public void ActivateProvinceManagementUI(bool active)
 	{
-		provinceManagementUIParent.SetActive(active);
+		provinceUIParent.SetActive(active);
 		if (active)
 		{
 			provinceUIActive = true;

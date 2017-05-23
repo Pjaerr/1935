@@ -5,7 +5,8 @@ using UnityEngine;
 public class WorldMap : MonoBehaviour 
 {
 	private Transform trans;
-	public Transform[] children;
+	public Transform[] provinces;
+	public Transform[] provincePoints;
 
 	// Use this for initialization
 	void Start ()
@@ -18,7 +19,7 @@ public class WorldMap : MonoBehaviour
 	{
 		for (int i = 0; i < trans.childCount; i++)
 		{
-			children[i] = trans.GetChild(i);
+			provinces[i] = trans.GetChild(i);
 		}
 	}
 

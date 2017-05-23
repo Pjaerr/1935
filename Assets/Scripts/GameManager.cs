@@ -48,7 +48,6 @@ public class GameManager : MonoBehaviour
 	void Start()
 	{
 		nationValues = new float[5] {1, 1000, 500, 500, 500};
-		Debug.Log(nationValues.Length);
 		SetWorldMap();
 		SetThisNationTransform();
 	}
@@ -65,6 +64,7 @@ public class GameManager : MonoBehaviour
 	{
 		nations = new Transform[WorldMap.childCount];	//nations[] is the same size as the number of children on WorldMap.
 
+		/*For every nation under worldmap, add each one incrementally to nations[]*/
 		for (int i = 0; i < WorldMap.childCount; i++)
 		{	
 			nations[i] = WorldMap.GetChild(i);
