@@ -2,10 +2,50 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public class Province
+{
+	public string name;
+	Transform trans;
+	Transform provincePoint;
+
+	/*These are the data values. value[0] is the actual value and value[1] is the amount
+	by which the first value will be changed every so often*/
+	int[] happiness = new int[2];
+	int[] economy = new int[2];
+	int[] food = new int[2];
+	int[] iron = new int[2];
+	int[] coal = new int[2];
+	int[] population = new int[2];
+
+	/*The object constructor. Takes a transform which will be assigned as this provinces
+	transform, it will automatically grab the provinces province point if it exists*/
+	public Province(Transform provinceTransform)
+	{
+		trans = provinceTransform;
+
+		if (provinceTransform.childCount > 0)
+		{
+			provincePoint = provinceTransform.GetChild(0);
+		}
+
+		name = trans.name;
+	}
+
+	public void UpdateValues()
+	{
+		happiness[0] += happiness[1];
+		economy[0] += economy[1];
+		food[0] += food[1];
+		iron[0] += iron[1];
+		coal[0] += coal[1];
+		population[0] += population[1];
+	}
+}
+
 public class ProvinceManagement : MonoBehaviour 
 {
-	private List<Transform> provinces;
-	private List<Transform> provincePoints;
+	private List<Province> provinces;
+
 	private Transform trans;
 	bool isRaised = false;
 	private Transform activeProvince;
@@ -13,50 +53,25 @@ public class ProvinceManagement : MonoBehaviour
 	void Start()
 	{
 		trans = GetComponent<Transform>();
-		SetProvinces();
+		InitProvinces();
 	}
 
-	void SetProvinces()
+	void InitProvinces()
 	{
-		provinces = new List<Transform>();
-		provincePoints = new List<Transform>();
+		provinces = new List<Province>();
 
 		for (int i = 0; i < trans.childCount; i++)
 		{
-			AddProvince(trans.GetChild(i));	//Adds the initial nations provinces and province points.
+			AddProvince(new Province(trans.GetChild(i)));
 		}
 	}
-
-	/*AddProvince() takes a transform, it will then add that transform to the list of provinces, and, 
-	if it has a province point (which all should, just a failsafe), it will add that province point to the list
-	of province points.*/
-	void AddProvince(Transform province)
+	void AddProvince(Province province)
 	{
 		provinces.Add(province);
-
-		if (province.childCount > 0)
-		{
-			provincePoints.Add(province.GetChild(0));
-			Debug.Log("Added " + province.name + " and it's province point to this nations provinces.");
-		}
 	}
-	/*RemoveProvince() takes a transform, it will then go through the list of provinces and if that transform
-	exists within the list of provinces, it will remove that transform.*/
-	void RemoveProvince(Transform province)
+	void RemoveProvince(Province province)
 	{
-		for (int i = 0; i < provinces.Count; i++)
-		{
-			if (province == provinces[i])
-			{
-				Debug.Log("Province: " + province + " has been removed.");
-				provinces.Remove(provinces[i]);
-
-				if (province.childCount > 0 && province.GetChild(0) == provincePoints[i])
-				{
-					provincePoints.Remove(provincePoints[i]);
-				}
-			}
-		}
+		provinces.Remove(province);
 	}
 
 	void Update()
@@ -87,15 +102,21 @@ public class ProvinceManagement : MonoBehaviour
 		}
 	}
 
+
+	/*TO FIX THE PROVINCE UI BEING ACTIVATED WHEN THE UNIT IS CLICKED, 
+	MAKE SURE TO CHECK IF THE RAYCAST IS HITTING A COLLIDER THAT IS A CHILD OF THE
+	PARENT THIS SCRIPT IS ATTACHED TO, OR ATLEAST SOME WAY LINKED VIA HEIRARCHY. */
 	bool provinceIsClicked()
 	{
 		bool isClicked = false;
 
 		if (Input.GetMouseButtonDown(0))
 		{
+			Debug.Log("Ray Fired");
 			RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-			if (hit.collider != null)
+			if (hit.collider != null && hit.transform.parent.IsChildOf(trans))
 			{
+				Debug.Log("Province Clicked");
 				isClicked = true;
 				activeProvince = hit.transform.parent;
 			}
