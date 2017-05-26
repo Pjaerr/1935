@@ -68,6 +68,7 @@ public class Unit : MonoBehaviour
 	}
 
 	//TODO: Tidy up access matrix code. Maybe think about using arrays, lists of somesort of the conditions.
+	
 	private void UnitAccessMatrix(int level)
 	{
 		/*Access Levels: 0 = Max access, 1 = Limited access, 2 = No Access*/
@@ -156,10 +157,10 @@ public class Unit : MonoBehaviour
 		if (isMoving && trans.position == destination)
 		{
 			isMoving = false;
-			pin.SetActive(false);	//Rework in time to accomodate for Object Pooling.
+			pin.SetActive(false);
 		}
 
-		float step = movementSpeed * Time.deltaTime; //Temporary movement value. Swap this out for predefined time value, so that the unit moves over time.
+		float step = movementSpeed * Time.deltaTime; 
 		trans.position = Vector2.MoveTowards(trans.position, destination, step);
 	}
 

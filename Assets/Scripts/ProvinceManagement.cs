@@ -5,17 +5,17 @@ using UnityEngine;
 public class Province
 {
 	public string name;
-	Transform trans;
+	public Transform trans;
 	Transform provincePoint;
 
 	/*These are the data values. value[0] is the actual value and value[1] is the amount
 	by which the first value will be changed every so often*/
-	int[] happiness = new int[2];
-	int[] economy = new int[2];
-	int[] food = new int[2];
-	int[] iron = new int[2];
-	int[] coal = new int[2];
-	int[] population = new int[2];
+	public int[] happiness = new int[2] {0, 0};
+	public int[] economy = new int[2] {0, 0};
+	public int[] food = new int[2] {0, 0};
+	public int[] iron = new int[2] {0, 0};
+	public int[] coal = new int[2] {0, 0};
+	public int[] population = new int[2] {0, 0};
 
 	/*The object constructor. Takes a transform which will be assigned as this provinces
 	transform, it will automatically grab the provinces province point if it exists*/
@@ -44,19 +44,19 @@ public class Province
 
 public class ProvinceManagement : MonoBehaviour 
 {
-	private List<Province> provinces;
+	private List<Province> provinces;	//List of provinces belonging to this nation. Province objects.
 
-	private Transform trans;
-	bool isRaised = false;
-	private Transform activeProvince;
+	private Transform trans;	//This nations transform.
+	bool isRaised = false;	//Is the active province currently raised.
+	private Province activeProvince;	//The province that is currently active.
 
 	void Start()
 	{
 		trans = GetComponent<Transform>();
-		InitProvinces();
+		InitialiseProvinces();
 	}
 
-	void InitProvinces()
+	void InitialiseProvinces()
 	{
 		provinces = new List<Province>();
 
@@ -65,6 +65,8 @@ public class ProvinceManagement : MonoBehaviour
 			AddProvince(new Province(trans.GetChild(i)));
 		}
 	}
+
+	/*Removes and/or adds a province to this nations province list. */
 	void AddProvince(Province province)
 	{
 		provinces.Add(province);
@@ -79,46 +81,56 @@ public class ProvinceManagement : MonoBehaviour
 		if (provinceIsClicked())
 		{
 			UI.singleton.ActivateProvinceManagementUI(true);
+			UI.singleton.LoadProvinceValues(activeProvince);
 			RaiseProvince(true);
 		}
-		else if (!UI.singleton.provinceUIActive)
+		else if (!UI.singleton.provinceUIActive && !provinceIsClicked())
 		{
 			RaiseProvince(false);
 		}
 	}
-	/*ACTIVE PROVINCE IS THE PROVINCE THAT HAS BEEN CLICKED. ASSOCIATE ANY DATA THAT
-	NEEDS TO BE ADDED TO THE UI WITH THAT TRANSFORM.*/
+
+	/*Raises the active province, should be called when a province is clicked and activated.*/
+	///bool raise should be true or false for whether to raise the province or not respectively.
 	void RaiseProvince(bool raise)
 	{
 		if (raise && !isRaised)
 		{
 			isRaised = true;
-			activeProvince.Translate(new Vector3(0, 0.3f, 0));
+			activeProvince.trans.Translate(new Vector3(0, 0.3f, 0));
 		}
 		else if (!raise && isRaised)
 		{
 			isRaised = false;
-			activeProvince.Translate(new Vector3(0, -0.3f, 0));
+			activeProvince.trans.Translate(new Vector3(0, -0.3f, 0));
 		}
 	}
 
-
-	/*TO FIX THE PROVINCE UI BEING ACTIVATED WHEN THE UNIT IS CLICKED, 
-	MAKE SURE TO CHECK IF THE RAYCAST IS HITTING A COLLIDER THAT IS A CHILD OF THE
-	PARENT THIS SCRIPT IS ATTACHED TO, OR ATLEAST SOME WAY LINKED VIA HEIRARCHY. */
+	/*This function should be called every frame. It will check if the right mouse button is down and if so, fire
+	a raycast from the mouse. If it hits, it will do some checking to see if it is a province, and if so, it will check
+	which province, and return the relevant object as the active province for use elsewhere. It will also return true or false
+	if a province is clicked.*/
 	bool provinceIsClicked()
 	{
 		bool isClicked = false;
 
 		if (Input.GetMouseButtonDown(0))
 		{
-			Debug.Log("Ray Fired");
-			RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-			if (hit.collider != null && hit.transform.parent.IsChildOf(trans))
+			RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);	//Sends raycast from mouse.
+			if (hit.collider != null && hit.transform.parent != null)	//If it has hit something and what it has hit has a parent.
 			{
-				Debug.Log("Province Clicked");
-				isClicked = true;
-				activeProvince = hit.transform.parent;
+				if (hit.transform.IsChildOf(trans))	//Is the object a child of this nation.
+				{
+					isClicked = true;
+					for (int i = 0; i < provinces.Count; i++)
+					{
+						if (hit.transform.parent == provinces[i].trans)	//Checks which province the province point that was clicked is a child of.
+						{
+							activeProvince = provinces[i];	//Sets that province as active.
+							break;
+						}
+					}
+				}
 			}
 		}
 

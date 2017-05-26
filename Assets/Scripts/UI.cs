@@ -26,6 +26,7 @@ public class UI : MonoBehaviour
 	3 = Iron
 	4 = Coal
 	5 = Population
+	6 = NationName
 	*/
 	[SerializeField] private Text[] provinceUI;
 	[SerializeField] private GameObject provinceUIParent;	//The game object that holds the province management UI.
@@ -33,6 +34,20 @@ public class UI : MonoBehaviour
 
 	[SerializeField] Text nationText;	//The text that shows the name of the currently played nation.
 	[SerializeField] Image nationFlag;	//The UI image that shows the flag of the currently played nation.
+
+	/*-------UNFINISHED BUILDING UI--------*/
+	[SerializeField] private List<GameObject> inactiveBuildings;
+	[SerializeField] private List<GameObject> activeBuildings;
+	[SerializeField] private GameObject testBarracks;
+
+	public void activateBuilding()
+	{
+		//inactiveBuildings.Remove(building);
+		testBarracks.transform.position = new Vector3(activeBuildings[activeBuildings.Count - 1].transform.position.x,activeBuildings[activeBuildings.Count - 1].transform.position.y - 40, 0);
+		testBarracks.transform.SetParent(activeBuildings[0].transform);
+		activeBuildings.Add(testBarracks);
+	}
+	/*-------UNFINISHED BUILDING UI--------*/
 
 	public static UI singleton = null;	//Singleton instance.
 
@@ -53,6 +68,7 @@ public class UI : MonoBehaviour
 
 		DontDestroyOnLoad(gameObject);
 	}
+
 	void Awake()
 	{
 		InitializeSingleton();
@@ -60,11 +76,11 @@ public class UI : MonoBehaviour
 
 	void Start()
 	{
-		InitialiseValues();
+		InitialisePersistentUI();
 	}
 	
 	/*Sets all default values for the persistent UI.*/
-	void InitialiseValues()
+	void InitialisePersistentUI()
 	{
 		nationText.text = GameManager.singleton.thisNation.ToString();
 		for (int i = 0; i < persistentUI.Length; i++)
@@ -102,9 +118,15 @@ public class UI : MonoBehaviour
 
 	/*This function should update the provinceManagementUI values as per the province that
 	has been activated using the UpdateValues() function. */
-	void LoadProvinceValues()
+	public void LoadProvinceValues(Province activeProvince)
 	{
-		
+		UpdateValue(0, activeProvince.happiness[0], "provinceManagementUI");
+		UpdateValue(1, activeProvince.economy[0], "provinceManagementUI");
+		UpdateValue(2, activeProvince.food[0], "provinceManagementUI");
+		UpdateValue(3, activeProvince.iron[0], "provinceManagementUI");
+		UpdateValue(4, activeProvince.coal[0], "provinceManagementUI");
+		UpdateValue(5, activeProvince.population[0], "provinceManagementUI");
+		provinceUI[6].text = activeProvince.name;
 	}
 
 	/*Either Activates or Deactivates the province management UI depending upon the
@@ -115,7 +137,6 @@ public class UI : MonoBehaviour
 		if (active)
 		{
 			provinceUIActive = true;
-			LoadProvinceValues();
 		}
 		else
 		{
