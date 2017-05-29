@@ -50,9 +50,11 @@ public class ProvinceManagement : MonoBehaviour
 	bool isRaised = false;	//Is the active province currently raised.
 	private Province activeProvince;	//The province that is currently active.
 
-	void Start()
+	/*TEMPORARY START METHOD, THIS IS ONLY IN PLACE WHILST STARTING A NETWORK AND THE GAME SCENE ARE THE SAME 
+	TO AVOID TRYING TO SET DATA WHEN IT DOESN'T EXIST.*/
+	public void NetworkStart()
 	{
-		trans = GetComponent<Transform>();
+		trans = GameManager.singleton.thisNationTransform;
 		InitialiseProvinces();
 	}
 

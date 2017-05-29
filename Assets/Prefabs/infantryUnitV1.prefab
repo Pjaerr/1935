@@ -55,6 +55,8 @@ GameObject:
   - component: {fileID: 212587390055055370}
   - component: {fileID: 61473500323252734}
   - component: {fileID: 114371553626034808}
+  - component: {fileID: 114454788484948910}
+  - component: {fileID: 114185060422397602}
   m_Layer: 0
   m_Name: infantryUnitV1
   m_TagString: Unit
@@ -187,7 +189,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1291342997558976}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.25, y: 6.88, z: 0}
+  m_LocalPosition: {x: -21.5, y: 13.6, z: 0}
   m_LocalScale: {x: 0.03, y: 0.03, z: 1}
   m_Children:
   - {fileID: 4219751851668096}
@@ -243,6 +245,38 @@ MonoBehaviour:
   m_Text: 'Move
 
 '
+--- !u!114 &114185060422397602
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1291342997558976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 76
+    i1: 33
+    i2: 3
+    i3: 22
+    i4: 204
+    i5: 206
+    i6: 215
+    i7: 148
+    i8: 89
+    i9: 115
+    i10: 193
+    i11: 238
+    i12: 68
+    i13: 189
+    i14: 28
+    i15: 32
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!114 &114199983638012776
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -270,7 +304,7 @@ MonoBehaviour:
     m_MinSize: 1
     m_MaxSize: 40
     m_Alignment: 0
-    m_AlignByGeometry: 0
+    m_AlignByGeometry: 1
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
@@ -340,9 +374,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeedScalingFactor: 1
-  pinPrefab: {fileID: 0}
+  pinPrefab: {fileID: 1672319893159614, guid: bc35ff06b4258364986b26ece1a0f759, type: 2}
   unitUI: {fileID: 1212511304698696}
-  parentNation: 0
+  parentNation: 13
 --- !u!114 &114439334379641746
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -364,6 +398,26 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+--- !u!114 &114454788484948910
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1291342997558976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 1
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 0
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
 --- !u!114 &114554158040800400
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -420,7 +474,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114371553626034808}
-        m_MethodName: StartMoving
+        m_MethodName: placePin
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -444,7 +498,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.25, g: 0.25, b: 0.25, a: 1}
+  m_Color: {r: 0.41960788, g: 0.25490198, b: 0.15294118, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -471,7 +525,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.20784315, g: 0.20784315, b: 0.20784315, a: 1}
+  m_Color: {r: 0.3529412, g: 0.21568629, b: 0.12941177, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -744,9 +798,9 @@ RectTransform:
   m_Father: {fileID: 224095806100137494}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -250}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 50}
   m_SizeDelta: {x: 320, y: 102}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224889606008965770

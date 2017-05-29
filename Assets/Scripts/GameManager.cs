@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour 
 {
+	public static bool networkIsConnected = false;
+
 	/*Default Attrbutes*/
 	public float defaultUnitMovementSpeed = 20.0f; //Default value to be set elsewhere as per time scaling.
 
@@ -21,7 +23,7 @@ public class GameManager : MonoBehaviour
 	[HideInInspector] public float[] nationValues;
 
 	public static GameManager singleton = null;	//Singleton instance.
-
+	
 	void InitializeSingleton()
 	{
 		//Check if an instance of NationManager already exists.
@@ -43,19 +45,15 @@ public class GameManager : MonoBehaviour
 	void Awake()
 	{
 		InitializeSingleton();
-	}
-
-	void Start()
-	{
-		nationValues = new float[5] {1, 1000, 500, 500, 500};
 		SetWorldMap();
-		SetThisNationTransform();
 	}
 
-	void Update()
+	public void SetLocalValues(Nation thisNationNetworked, float[] nationValuesNetworked)
 	{
-		/*KEEP FOR TESTING.*/
+		thisNation = thisNationNetworked;
+		nationValues = nationValuesNetworked;
 		SetThisNationTransform();
+		networkIsConnected = true;
 	}
 
 	/*Grabs all children Transforms of the referenced WorldMap object 

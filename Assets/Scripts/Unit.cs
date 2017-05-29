@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
-public class Unit : MonoBehaviour
+public class Unit : NetworkBehaviour
 {
 	/*MOVEMENT*/
 	/*Movement speed for all units. Useful to set by default depending upon how quick the game should progress
@@ -34,7 +35,6 @@ public class Unit : MonoBehaviour
 	private bool isMoving = false;
 	private bool pinPlaced = false;	//Used to control pin placement.
 	private bool pinActive = false;	//Used to initiate pin placement.
-
 
 	/*MONOBEHAVOUR TEMPLATES*/
 
@@ -140,6 +140,7 @@ public class Unit : MonoBehaviour
 
 		if (pinPlaced)
 		{
+			Debug.Log("Pin has been placed!");
 			isMoving = true;
 			destination = pin.transform.position;
 		}
@@ -151,17 +152,19 @@ public class Unit : MonoBehaviour
 		}
 	}
 
-	/*Moves the unit towards the destination at the given movementSpeed*/
 	private void Move()
 	{
+	
 		if (isMoving && trans.position == destination)
 		{
 			isMoving = false;
 			pin.SetActive(false);
 		}
-
-		float step = movementSpeed * Time.deltaTime; 
-		trans.position = Vector2.MoveTowards(trans.position, destination, step);
+		else
+		{
+			float step = movementSpeed * Time.deltaTime; 
+			trans.position = Vector2.MoveTowards(trans.position, destination, step);
+		}
 	}
 
 	/*Activates and/or Deactivates this unit's UI menu.*/

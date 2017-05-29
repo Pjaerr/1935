@@ -19,7 +19,15 @@ public class CameraControl : MonoBehaviour
 	{
 		thisCamera = GetComponent<Camera>();
 		trans = GetComponent<Transform>();
-		PanToNation();
+
+		/*Avoids doing something that requires the GameManager values to actually work
+		as before the NetworkManager has started the game, the GameManager will not have any
+		values and will throw a NullReferenceException.This can be removed once the starting 
+		of a game is seperated from the actual game scene itself.*/
+		if (GameManager.networkIsConnected)
+		{
+			PanToNation();
+		}
 	}
 
 	void Update()

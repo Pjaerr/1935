@@ -35,19 +35,6 @@ public class UI : MonoBehaviour
 	[SerializeField] Text nationText;	//The text that shows the name of the currently played nation.
 	[SerializeField] Image nationFlag;	//The UI image that shows the flag of the currently played nation.
 
-	/*-------UNFINISHED BUILDING UI--------*/
-	[SerializeField] private List<GameObject> inactiveBuildings;
-	[SerializeField] private List<GameObject> activeBuildings;
-	[SerializeField] private GameObject testBarracks;
-
-	public void activateBuilding()
-	{
-		//inactiveBuildings.Remove(building);
-		testBarracks.transform.position = new Vector3(activeBuildings[activeBuildings.Count - 1].transform.position.x,activeBuildings[activeBuildings.Count - 1].transform.position.y - 40, 0);
-		testBarracks.transform.SetParent(activeBuildings[0].transform);
-		activeBuildings.Add(testBarracks);
-	}
-	/*-------UNFINISHED BUILDING UI--------*/
 
 	public static UI singleton = null;	//Singleton instance.
 
@@ -76,7 +63,14 @@ public class UI : MonoBehaviour
 
 	void Start()
 	{
-		InitialisePersistentUI();
+		/*Avoids doing something that requires the GameManager values to actually work
+		as before the NetworkManager has started the game, the GameManager will not have any
+		values and will throw a NullReferenceException.This can be removed once the starting 
+		of a game is seperated from the actual game scene itself.*/
+		if (GameManager.networkIsConnected)
+		{
+			InitialisePersistentUI();
+		}
 	}
 	
 	/*Sets all default values for the persistent UI.*/
