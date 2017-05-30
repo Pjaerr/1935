@@ -12,7 +12,7 @@ public class Unit : NetworkBehaviour
 	private float movementSpeed = 0.0f;
 
 	/*The Vector3 that the unit will move towards when Move() is called*/
-	Vector3 destination;
+	[HideInInspector] public Vector3 destination;
 
 	/*Factor by which to set this units movement speed. 
 	This should be the only value changed on inherited objects.*/
@@ -22,7 +22,7 @@ public class Unit : NetworkBehaviour
 	private Transform trans; //This object's transform.
 	private SpriteRenderer spriteRenderer;	//This object's sprite renderer.
 	[SerializeField] private GameObject pinPrefab;	//The pin that will be instantiated.
-	private GameObject pin;	//The instantiated pin as a game object.
+	[HideInInspector] private GameObject pin;	//The instantiated pin as a game object.
 
 	/*UI*/
 	[SerializeField] private GameObject unitUI;
@@ -32,9 +32,12 @@ public class Unit : NetworkBehaviour
 
 	private bool isVisible = false;			//Check to see if visible before making it visible.
 	private bool isInteractable = false;
-	private bool isMoving = false;
+	public bool isMoving = false;
 	private bool pinPlaced = false;	//Used to control pin placement.
 	private bool pinActive = false;	//Used to initiate pin placement.
+
+
+	GameObject client;
 
 	/*MONOBEHAVOUR TEMPLATES*/
 
@@ -43,6 +46,9 @@ public class Unit : NetworkBehaviour
 	for code that occurs for all units.*/
 	public void unitStart()
 	{
+		client = GameManager.singleton.client;
+
+
 		SetAccessMatrix();	//Allocate access for this unit to the client.
 		trans = GetComponent<Transform>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
@@ -140,9 +146,7 @@ public class Unit : NetworkBehaviour
 
 		if (pinPlaced)
 		{
-			Debug.Log("Pin has been placed!");
-			isMoving = true;
-			destination = pin.transform.position;
+			GameManager.singleton.client.GetComponent<UnitControl>().CmdPinPlaced(this.gameObject, pin.transform.position);
 		}
 		else
 		{
@@ -152,13 +156,22 @@ public class Unit : NetworkBehaviour
 		}
 	}
 
+	[ClientRpc]
+	void RpcDestinationReached()	//Function sent back to all clients once the server unit has reached its destination.
+	{
+		isMoving = false;
+		if (!isServer)
+		{
+			//Only deactivate the pin if this isn't the object on the server. (as no pin will have been instantiated on the server)
+			pin.SetActive(false);
+		}
+	}
+
 	private void Move()
 	{
-	
 		if (isMoving && trans.position == destination)
 		{
-			isMoving = false;
-			pin.SetActive(false);
+			RpcDestinationReached();
 		}
 		else
 		{

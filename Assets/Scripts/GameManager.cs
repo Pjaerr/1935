@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
 public class GameManager : MonoBehaviour 
 {
@@ -21,6 +22,8 @@ public class GameManager : MonoBehaviour
 
 	/*Nation Values*/
 	[HideInInspector] public float[] nationValues;
+
+	public GameObject client;
 
 	public static GameManager singleton = null;	//Singleton instance.
 	
@@ -48,8 +51,9 @@ public class GameManager : MonoBehaviour
 		SetWorldMap();
 	}
 
-	public void SetLocalValues(Nation thisNationNetworked, float[] nationValuesNetworked)
+	public void SetLocalValues(Nation thisNationNetworked, float[] nationValuesNetworked, GameObject playerManager)
 	{
+		client = playerManager;
 		thisNation = thisNationNetworked;
 		nationValues = nationValuesNetworked;
 		SetThisNationTransform();
