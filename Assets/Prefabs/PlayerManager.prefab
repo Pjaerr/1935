@@ -99,7 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   infantryUnit: {fileID: 1291342997558976, guid: 4c210316ccced7945973c1ee44bd1c20,
     type: 2}
-  thisNation: 5
+  thisNation: 0
 --- !u!114 &114985204991183892
 MonoBehaviour:
   m_ObjectHideFlags: 1

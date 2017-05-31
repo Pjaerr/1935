@@ -50,7 +50,6 @@ public class GameManager : MonoBehaviour
 		InitializeSingleton();
 		SetWorldMap();
 	}
-
 	void Start()
 	{
 		Debug.Log(nations.Length + " Nations loaded.");

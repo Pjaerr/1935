@@ -141,11 +141,8 @@ public class Unit : NetworkBehaviour
 
 		if (pinPlaced)
 		{
-			//FIGURE OUT >>
-			/*This piece of code sits on an object that gets spawned by the server. It has no authority. I spawn two of these objects and 
-			when I call the above snippet on the server (host) it will work, and pass in a reference to itself via the this.gameobject, 
-			however, if I call the above snippet on the client, this.gameobject passed through null to the [Command] Any ideas? */
 			GameManager.singleton.client.GetComponent<UnitControl>().CmdPinPlaced(this.gameObject, pin.transform.position);
+
 		}
 		else
 		{
