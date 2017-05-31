@@ -37,8 +37,6 @@ public class Unit : NetworkBehaviour
 	private bool pinActive = false;	//Used to initiate pin placement.
 
 
-	GameObject client;
-
 	/*MONOBEHAVOUR TEMPLATES*/
 
 	/*Function used to update this Unit.cs class. This allows the actual monobehaviour Update()
@@ -46,9 +44,6 @@ public class Unit : NetworkBehaviour
 	for code that occurs for all units.*/
 	public void unitStart()
 	{
-		client = GameManager.singleton.client;
-
-
 		SetAccessMatrix();	//Allocate access for this unit to the client.
 		trans = GetComponent<Transform>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
@@ -146,6 +141,10 @@ public class Unit : NetworkBehaviour
 
 		if (pinPlaced)
 		{
+			//FIGURE OUT >>
+			/*This piece of code sits on an object that gets spawned by the server. It has no authority. I spawn two of these objects and 
+			when I call the above snippet on the server (host) it will work, and pass in a reference to itself via the this.gameobject, 
+			however, if I call the above snippet on the client, this.gameobject passed through null to the [Command] Any ideas? */
 			GameManager.singleton.client.GetComponent<UnitControl>().CmdPinPlaced(this.gameObject, pin.transform.position);
 		}
 		else

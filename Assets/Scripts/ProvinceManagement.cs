@@ -44,7 +44,7 @@ public class Province
 
 public class ProvinceManagement : MonoBehaviour 
 {
-	private List<Province> provinces;	//List of provinces belonging to this nation. Province objects.
+	public List<Province> provinces;	//List of provinces belonging to this nation. Province objects.
 
 	private Transform trans;	//This nations transform.
 	bool isRaised = false;	//Is the active province currently raised.
@@ -56,6 +56,7 @@ public class ProvinceManagement : MonoBehaviour
 	{
 		trans = GameManager.singleton.thisNationTransform;
 		InitialiseProvinces();
+		Debug.Log(provinces.Count + " Provinces loaded for this nation.");
 	}
 
 	void InitialiseProvinces()

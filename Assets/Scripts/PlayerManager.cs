@@ -5,7 +5,8 @@ using UnityEngine.Networking;
 
 public class PlayerManager : NetworkBehaviour 
 {
-	[SerializeField] GameManager.Nation thisNation;	//This nations nation enum.
+	[SerializeField] GameObject infantryUnit;
+	public GameManager.Nation thisNation;	//This nations nation enum.
 
 	/*This nations values in order of:
 	0 = Happiness
@@ -17,6 +18,15 @@ public class PlayerManager : NetworkBehaviour
 
 	void Start() 
 	{
+		//this nation is france unless another client exists, then germany.
+		if (!isServer)
+		{
+			thisNation = GameManager.Nation.Germany;
+		}
+		else
+		{
+			thisNation = GameManager.Nation.France;
+		}
 
 		Debug.Log("Player with ID: " + GetComponent<NetworkIdentity>().netId + " has connected!");
 
@@ -37,29 +47,7 @@ public class PlayerManager : NetworkBehaviour
 		the PlayerManager has been started via the NetworkManager. This can be removed once
 		the starting of a game is seperated from the actual game scene itself.*/
 		GetComponent<ProvinceManagement>().NetworkStart();	
-	}
 
-	void Update()
-	{
-		if (!isLocalPlayer)
-		{
-			return;
-		}
-
-		if (Input.GetKeyDown(KeyCode.Space))
-		{
-			Debug.Log("Key pressed on the server: " + isServer);
-			CmdMoveUnit();
-		}
-		
-	}
-
-
-	[Command]
-	void CmdMoveUnit()
-	{
-		
-		Debug.Log("Command Function Called");
-		
+		GetComponent<UnitControl>().CmdSpawnUnit("infantryUnitV1", GetComponent<ProvinceManagement>().provinces[5].trans.position, thisNation);
 	}
 }

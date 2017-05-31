@@ -51,6 +51,10 @@ public class GameManager : MonoBehaviour
 		SetWorldMap();
 	}
 
+	void Start()
+	{
+		Debug.Log(nations.Length + " Nations loaded.");
+	}
 	public void SetLocalValues(Nation thisNationNetworked, float[] nationValuesNetworked, GameObject playerManager)
 	{
 		client = playerManager;

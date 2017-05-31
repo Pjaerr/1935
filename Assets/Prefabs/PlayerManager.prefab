@@ -97,7 +97,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 212d44308ea5468469d321c14e7119bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thisNation: 13
+  infantryUnit: {fileID: 1291342997558976, guid: 4c210316ccced7945973c1ee44bd1c20,
+    type: 2}
+  thisNation: 5
 --- !u!114 &114985204991183892
 MonoBehaviour:
   m_ObjectHideFlags: 1

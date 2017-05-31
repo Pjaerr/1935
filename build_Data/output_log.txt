@@ -17,15 +17,23 @@ Platform assembly: C:\Users\Pjaer\Desktop\1935\1935\build_Data\Managed\UnityEngi
 Loading C:\Users\Pjaer\Desktop\1935\1935\build_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
 Platform assembly: C:\Users\Pjaer\Desktop\1935\1935\build_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll (this message is harmless)
 Loading C:\Users\Pjaer\Desktop\1935\1935\build_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll into Unity Child Domain
-- Completed reload, in  0.053 seconds
+- Completed reload, in  0.047 seconds
 Platform assembly: C:\Users\Pjaer\Desktop\1935\1935\build_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\Pjaer\Desktop\1935\1935\build_Data\Managed\System.dll (this message is harmless)
 desktop: 1280x720 59Hz; virtual: 3200x1080 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
 <RI> Initialized touch support.
-UnloadTime: 1.785389 ms
-Player with ID: 2 has connected!
+UnloadTime: 1.479680 ms
+16 Nations loaded.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Failed to spawn server object, assetId=4c210316ccced7945973c1ee44bd1c20 netId=2
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Player with ID: 1 has connected!
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
@@ -33,5 +41,17 @@ Player with ID: 3 has connected!
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
+9 Provinces loaded for this nation.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+SpawnObject for infantryUnitV1(Clone) (UnityEngine.GameObject), NetworkServer is not active. Cannot spawn objects without an active server.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Failed to spawn server object, assetId=4c210316ccced7945973c1ee44bd1c20 netId=4
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
 Setting up 1 worker threads for Enlighten.
-  Thread -> id: 1ffc -> priority: 1 
+  Thread -> id: b98 -> priority: 1 

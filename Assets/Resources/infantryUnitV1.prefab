@@ -189,7 +189,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1291342997558976}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -21.5, y: 13.6, z: 0}
+  m_LocalPosition: {x: -4.42, y: 2.95, z: 0}
   m_LocalScale: {x: 0.03, y: 0.03, z: 1}
   m_Children:
   - {fileID: 4219751851668096}
@@ -373,10 +373,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cb1b6f5d172a8047b2ebcceadfa68ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destination: {x: 0, y: 0, z: 0}
   movementSpeedScalingFactor: 1
   pinPrefab: {fileID: 1672319893159614, guid: bc35ff06b4258364986b26ece1a0f759, type: 2}
   unitUI: {fileID: 1212511304698696}
   parentNation: 13
+  isMoving: 0
 --- !u!114 &114439334379641746
 MonoBehaviour:
   m_ObjectHideFlags: 1
