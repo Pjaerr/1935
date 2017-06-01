@@ -36,7 +36,6 @@ public class Unit : NetworkBehaviour
 	private bool pinPlaced = false;	//Used to control pin placement.
 	private bool pinActive = false;	//Used to initiate pin placement.
 
-
 	/*MONOBEHAVOUR TEMPLATES*/
 
 	/*Function used to update this Unit.cs class. This allows the actual monobehaviour Update()
@@ -65,6 +64,7 @@ public class Unit : NetworkBehaviour
 	/*Calls a function when mouse clicks on the collider attached to this.gameObject. */
 	void OnMouseDown()
 	{
+		
 		DisplayUnitUI(true);
 	}
 
@@ -78,25 +78,30 @@ public class Unit : NetworkBehaviour
 			/*Make this unit both visible and interactable to this client.*/
 			isVisible = true;
 			isInteractable = true;
+			Debug.Log("Unit " + netId + " nation is: " + GameManager.singleton.thisNation + " inside UnitAccessMatrix() first IF");
 		}
 		else if (level == 1)
 		{
 			/*Make this unit only visible to this client.*/
 			isVisible = true;
 			isInteractable = false;
+			Debug.Log("Unit " + netId + " nation is: " + GameManager.singleton.thisNation + " inside UnitAccessMatrix() second IF");
 		}
 		else if (level == 2)
 		{
 			isVisible = false;
 			isInteractable = false;
+			Debug.Log("Unit " + netId + " nation is: " + GameManager.singleton.thisNation + " inside UnitAccessMatrix() second IF");
 		}
 	}
 
 	private void SetAccessMatrix()
 	{
+		Debug.Log("Unit " + netId + " nation is: " + GameManager.singleton.thisNation + " inside SetAccessMatrix();");
 		/*If this unit belongs to the nation this client is currently registered as.*/
 		if (parentNation == GameManager.singleton.thisNation)
 		{
+			Debug.Log("Unit " + netId + " nation is: " + GameManager.singleton.thisNation + " inside SetAccessMatrix() first IF");
 			UnitAccessMatrix(0);	//Give this client all access to this unit.
 		}
 		else
@@ -181,6 +186,7 @@ public class Unit : NetworkBehaviour
 	{
 		if (isInteractable)
 		{
+			
 			unitUI.SetActive(isActive);
 		}
 	}

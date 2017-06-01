@@ -72,6 +72,11 @@ public class UI : MonoBehaviour
 			InitialisePersistentUI();
 		}
 	}
+
+	void Update()
+	{
+		nationText.text = GameManager.singleton.thisNation.ToString();
+	}
 	
 	/*Sets all default values for the persistent UI.*/
 	void InitialisePersistentUI()

@@ -56,7 +56,6 @@ public class ProvinceManagement : MonoBehaviour
 	{
 		trans = GameManager.singleton.thisNationTransform;
 		InitialiseProvinces();
-		Debug.Log(provinces.Count + " Provinces loaded for this nation.");
 	}
 
 	void InitialiseProvinces()
