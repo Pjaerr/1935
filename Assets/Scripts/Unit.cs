@@ -44,19 +44,10 @@ public class Unit : NetworkBehaviour
 	for code that occurs for all units.*/
 	public void unitStart()
 	{
-		RpcSetAccessMatrix();	//Allocate access for this unit to the client.
+		RpcInitializeAccessMatrix();	//Allocate access for this unit to the client.
 		trans = GetComponent<Transform>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		movementSpeed = GameManager.singleton.defaultUnitMovementSpeed * movementSpeedScalingFactor;
-
-		if (!isVisible)
-		{
-			spriteRenderer.enabled = false;
-		}
-		else
-		{
-			spriteRenderer.enabled = true;
-		}
 	}
 	public void unitUpdate()
 	{
@@ -70,7 +61,6 @@ public class Unit : NetworkBehaviour
 		}
 	}
 
-	/*MONOBEHAVIOUR FUNCTIONS*/
 	/*Calls a function when mouse clicks on the collider attached to this.gameObject. */
 	void OnMouseDown()
 	{
@@ -100,9 +90,27 @@ public class Unit : NetworkBehaviour
 		}
 	}
 
+	private void setVisibility()
+	{
+		if (isVisible)
+		{
+			spriteRenderer.enabled = true;
+		}
+		else
+		{
+			spriteRenderer.enabled = false;
+		}	
+	}
+
+
+	/*Called in unitStart(), will make an RPC call to all clients, checking if the parentNation of their version of
+	this unit is the same as their locally stored thisNation and setting the unit access for their version of the unit
+	accordingly. This code is also called on the server. ***This is only initally called when a unit is spawned into the scene,
+	thus not setting the access matrix on units currently in the scene when a client connects, will need to re-call this RPC
+	or put in place to call RPC when client connects.*/
 	[ClientRpc]
-	public void RpcSetAccessMatrix()
-	{	
+	public void RpcInitializeAccessMatrix()
+	{
 		/*If this unit belongs to the nation this client is currently registered as.*/
 		if (parentNation == GameManager.singleton.thisNation)
 		{
@@ -112,6 +120,8 @@ public class Unit : NetworkBehaviour
 		{
 			UnitAccessMatrix(2);
 		}
+		
+		setVisibility();
 	}
 
 	/*Starts the pin placement*/
