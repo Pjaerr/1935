@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
 
 	public static GameManager singleton = null;	//Singleton instance.
 	
+	
+
 	void InitializeSingleton()
 	{
 		//Check if an instance of NationManager already exists.

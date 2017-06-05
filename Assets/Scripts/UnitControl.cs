@@ -22,9 +22,9 @@ public class UnitControl : NetworkBehaviour
 	[Command]
 	public void CmdSpawnUnit(string type, Vector2 pos, GameManager.Nation parentNation)
 	{
-		Debug.Log("Units Parent Nation: " + parentNation + " @ UnitControl.cs::CmdSpawnUnit();");
+		Debug.Log("thisNation is " + parentNation.ToString() + " @ UnitControl.cs");
 		GameObject go = (GameObject)Instantiate(Resources.Load(type, typeof(GameObject)), pos, Quaternion.identity);
-		
+		go.GetComponent<Unit>().parentNation = parentNation;
 		NetworkServer.Spawn(go);
 	}
 }

@@ -28,6 +28,7 @@ public class Unit : NetworkBehaviour
 	[SerializeField] private GameObject unitUI;
 
 	/*CHECKS*/
+	[SyncVar]
 	public GameManager.Nation parentNation;	//This unit's parent nation.
 
 	private bool isVisible = false;			//Check to see if visible before making it visible.
@@ -43,7 +44,7 @@ public class Unit : NetworkBehaviour
 	for code that occurs for all units.*/
 	public void unitStart()
 	{
-		SetAccessMatrix();	//Allocate access for this unit to the client.
+		RpcSetAccessMatrix();	//Allocate access for this unit to the client.
 		trans = GetComponent<Transform>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		movementSpeed = GameManager.singleton.defaultUnitMovementSpeed * movementSpeedScalingFactor;
@@ -64,12 +65,10 @@ public class Unit : NetworkBehaviour
 	/*Calls a function when mouse clicks on the collider attached to this.gameObject. */
 	void OnMouseDown()
 	{
-		
 		DisplayUnitUI(true);
 	}
 
 	//TODO: Tidy up access matrix code. Maybe think about using arrays, lists of somesort of the conditions.
-	
 	private void UnitAccessMatrix(int level)
 	{
 		/*Access Levels: 0 = Max access, 1 = Limited access, 2 = No Access*/
@@ -92,8 +91,12 @@ public class Unit : NetworkBehaviour
 		}
 	}
 
-	private void SetAccessMatrix()
-	{
+	[ClientRpc]
+	public void RpcSetAccessMatrix()
+	{	
+		//PARENT NATION OF THIS UNIT ON THE CLIENT IS THE DEFAULT PARENT NATION UK.
+
+		GameManager.singleton.client.GetComponent<PlayerManager>().CmdPrintNation(parentNation);
 		/*If this unit belongs to the nation this client is currently registered as.*/
 		if (parentNation == GameManager.singleton.thisNation)
 		{

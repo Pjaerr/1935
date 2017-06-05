@@ -2,10 +2,10 @@ Mono path[0] = 'C:/Users/Pjaer/Desktop/1935/1935/build_Data/Managed'
 Mono path[1] = 'C:/Users/Pjaer/Desktop/1935/1935/build_Data/Mono'
 Mono config path = 'C:/Users/Pjaer/Desktop/1935/1935/build_Data/Mono/etc'
 PlayerConnection initialized from C:/Users/Pjaer/Desktop/1935/1935/build_Data (debug = 0)
-PlayerConnection initialized network socket : 0.0.0.0 55243
-Multi-casting "[IP] 100.67.28.131 [Port] 55243 [Flags] 2 [Guid] 3510301203 [EditorId] 4294413473 [Version] 1048832 [Id] WindowsPlayer(Pjaer-PC) [Debug] 0" to [225.0.0.222:54997]...
-Started listening to [0.0.0.0:55243]
-PlayerConnection already initialized - listening to [0.0.0.0:55243]
+PlayerConnection initialized network socket : 0.0.0.0 55246
+Multi-casting "[IP] 100.67.28.133 [Port] 55246 [Flags] 2 [Guid] 1790868398 [EditorId] 3903819921 [Version] 1048832 [Id] WindowsPlayer(Pjaer-PC) [Debug] 0" to [225.0.0.222:54997]...
+Started listening to [0.0.0.0:55246]
+PlayerConnection already initialized - listening to [0.0.0.0:55246]
 Initialize engine version: 5.5.2f1 (3829d7f588f3)
 GfxDevice: creating device client; threaded=1
 Direct3D:
@@ -25,116 +25,69 @@ Platform assembly: C:\Users\Pjaer\Desktop\1935\1935\build_Data\Managed\UnityEngi
 Loading C:\Users\Pjaer\Desktop\1935\1935\build_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
 Platform assembly: C:\Users\Pjaer\Desktop\1935\1935\build_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll (this message is harmless)
 Loading C:\Users\Pjaer\Desktop\1935\1935\build_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll into Unity Child Domain
-- Completed reload, in  0.057 seconds
+- Completed reload, in  0.047 seconds
 Platform assembly: C:\Users\Pjaer\Desktop\1935\1935\build_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\Pjaer\Desktop\1935\1935\build_Data\Managed\System.dll (this message is harmless)
 desktop: 1280x720 59Hz; virtual: 3200x1080 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
 <RI> Initialized touch support.
-UnloadTime: 1.834176 ms
-Player with ID: 1 has connected!
+UnloadTime: 3.565618 ms
+Player with ID: 1 has connected
 UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
 UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
 UnityEngine.Logger:Log(LogType, Object)
 UnityEngine.Debug:Log(Object)
-PlayerManager:Start() (at C:\Users\Pjaer\Desktop\1935\1935\Assets\Scripts\PlayerManager.cs:24)
+PlayerManager:Start() (at C:\Users\Pjaer\Desktop\1935\1935\Assets\Scripts\PlayerManager.cs:23)
  
-(Filename: C:/Users/Pjaer/Desktop/1935/1935/Assets/Scripts/PlayerManager.cs Line: 24)
+(Filename: C:/Users/Pjaer/Desktop/1935/1935/Assets/Scripts/PlayerManager.cs Line: 23)
 
-Unit 2 nation is: UK inside SetAccessMatrix();
+RPC Function RpcSetAccessMatrix called on client.
 UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
 UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
 UnityEngine.Logger:Log(LogType, Object)
-UnityEngine.Debug:Log(Object)
-Unit:SetAccessMatrix() (at C:\Users\Pjaer\Desktop\1935\1935\Assets\Scripts\Unit.cs:100)
-Unit:unitStart() (at C:\Users\Pjaer\Desktop\1935\1935\Assets\Scripts\Unit.cs:46)
+UnityEngine.Debug:LogError(Object)
+Unit:CallRpcSetAccessMatrix()
+Unit:unitStart() (at C:\Users\Pjaer\Desktop\1935\1935\Assets\Scripts\Unit.cs:47)
 InfantryUnit:Start() (at C:\Users\Pjaer\Desktop\1935\1935\Assets\Scripts\InfantryUnit.cs:9)
  
-(Filename: C:/Users/Pjaer/Desktop/1935/1935/Assets/Scripts/Unit.cs Line: 100)
+(Filename: C:/Users/Pjaer/Desktop/1935/1935/Assets/Scripts/Unit.cs Line: 47)
 
-Unit 2 nation is: UK inside SetAccessMatrix() first IF
+Player with ID: 3 has connected
 UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
 UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
 UnityEngine.Logger:Log(LogType, Object)
 UnityEngine.Debug:Log(Object)
-Unit:SetAccessMatrix() (at C:\Users\Pjaer\Desktop\1935\1935\Assets\Scripts\Unit.cs:104)
-Unit:unitStart() (at C:\Users\Pjaer\Desktop\1935\1935\Assets\Scripts\Unit.cs:46)
+PlayerManager:Start() (at C:\Users\Pjaer\Desktop\1935\1935\Assets\Scripts\PlayerManager.cs:23)
+ 
+(Filename: C:/Users/Pjaer/Desktop/1935/1935/Assets/Scripts/PlayerManager.cs Line: 23)
+
+RPC Function RpcSetAccessMatrix called on client.
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:LogError(Object)
+Unit:CallRpcSetAccessMatrix()
+Unit:unitStart() (at C:\Users\Pjaer\Desktop\1935\1935\Assets\Scripts\Unit.cs:47)
 InfantryUnit:Start() (at C:\Users\Pjaer\Desktop\1935\1935\Assets\Scripts\InfantryUnit.cs:9)
  
-(Filename: C:/Users/Pjaer/Desktop/1935/1935/Assets/Scripts/Unit.cs Line: 104)
+(Filename: C:/Users/Pjaer/Desktop/1935/1935/Assets/Scripts/Unit.cs Line: 47)
 
-Unit 2 nation is: UK inside UnitAccessMatrix() first IF
+Log: connection {1} has been disconnected by timeout; address {::ffff:127.0.0.1:7777}
+ClientDisconnected due to error: Timeout
 UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
 UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
 UnityEngine.Logger:Log(LogType, Object)
-UnityEngine.Debug:Log(Object)
-Unit:UnitAccessMatrix(Int32) (at C:\Users\Pjaer\Desktop\1935\1935\Assets\Scripts\Unit.cs:81)
-Unit:SetAccessMatrix() (at C:\Users\Pjaer\Desktop\1935\1935\Assets\Scripts\Unit.cs:105)
-Unit:unitStart() (at C:\Users\Pjaer\Desktop\1935\1935\Assets\Scripts\Unit.cs:46)
-InfantryUnit:Start() (at C:\Users\Pjaer\Desktop\1935\1935\Assets\Scripts\InfantryUnit.cs:9)
+UnityEngine.Debug:LogError(Object)
+UnityEngine.Networking.NetworkManager:OnClientDisconnect(NetworkConnection) (at C:\buildslave\unity\build\Extensions\Networking\Runtime\NetworkManager.cs:1125)
+UnityEngine.Networking.NetworkManager:OnClientDisconnectInternal(NetworkMessage) (at C:\buildslave\unity\build\Extensions\Networking\Runtime\NetworkManager.cs:954)
+UnityEngine.Networking.NetworkConnection:InvokeHandler(Int16, NetworkReader, Int32) (at C:\buildslave\unity\build\Extensions\Networking\Runtime\NetworkConnection.cs:217)
+UnityEngine.Networking.NetworkConnection:InvokeHandlerNoData(Int16) (at C:\buildslave\unity\build\Extensions\Networking\Runtime\NetworkConnection.cs:199)
+UnityEngine.Networking.NetworkClient:Update() (at C:\buildslave\unity\build\Extensions\Networking\Runtime\NetworkClient.cs:753)
+UnityEngine.Networking.NetworkClient:UpdateClients() (at C:\buildslave\unity\build\Extensions\Networking\Runtime\NetworkClient.cs:950)
+UnityEngine.Networking.NetworkIdentity:UNetStaticUpdate() (at C:\buildslave\unity\build\Extensions\Networking\Runtime\NetworkIdentity.cs:1089)
  
-(Filename: C:/Users/Pjaer/Desktop/1935/1935/Assets/Scripts/Unit.cs Line: 81)
-
-Player with ID: 3 has connected!
-UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
-UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
-UnityEngine.Logger:Log(LogType, Object)
-UnityEngine.Debug:Log(Object)
-PlayerManager:Start() (at C:\Users\Pjaer\Desktop\1935\1935\Assets\Scripts\PlayerManager.cs:24)
- 
-(Filename: C:/Users/Pjaer/Desktop/1935/1935/Assets/Scripts/PlayerManager.cs Line: 24)
-
-Unit 4 nation is: Germany inside SetAccessMatrix();
-UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
-UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
-UnityEngine.Logger:Log(LogType, Object)
-UnityEngine.Debug:Log(Object)
-Unit:SetAccessMatrix() (at C:\Users\Pjaer\Desktop\1935\1935\Assets\Scripts\Unit.cs:100)
-Unit:unitStart() (at C:\Users\Pjaer\Desktop\1935\1935\Assets\Scripts\Unit.cs:46)
-InfantryUnit:Start() (at C:\Users\Pjaer\Desktop\1935\1935\Assets\Scripts\InfantryUnit.cs:9)
- 
-(Filename: C:/Users/Pjaer/Desktop/1935/1935/Assets/Scripts/Unit.cs Line: 100)
-
-Unit 4 nation is: Germany inside UnitAccessMatrix() second IF
-UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
-UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
-UnityEngine.Logger:Log(LogType, Object)
-UnityEngine.Debug:Log(Object)
-Unit:UnitAccessMatrix(Int32) (at C:\Users\Pjaer\Desktop\1935\1935\Assets\Scripts\Unit.cs:94)
-Unit:SetAccessMatrix() (at C:\Users\Pjaer\Desktop\1935\1935\Assets\Scripts\Unit.cs:109)
-Unit:unitStart() (at C:\Users\Pjaer\Desktop\1935\1935\Assets\Scripts\Unit.cs:46)
-InfantryUnit:Start() (at C:\Users\Pjaer\Desktop\1935\1935\Assets\Scripts\InfantryUnit.cs:9)
- 
-(Filename: C:/Users/Pjaer/Desktop/1935/1935/Assets/Scripts/Unit.cs Line: 94)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at Unit.RpcDestinationReached () [0x0001b] in C:\Users\Pjaer\Desktop\1935\1935\Assets\Scripts\Unit.cs:167 
-  at Unit.InvokeRpcRpcDestinationReached (UnityEngine.Networking.NetworkBehaviour obj, UnityEngine.Networking.NetworkReader reader) [0x00000] in <filename unknown>:0 
-  at UnityEngine.Networking.NetworkIdentity.HandleRPC (Int32 cmdHash, UnityEngine.Networking.NetworkReader reader) [0x00144] in C:\buildslave\unity\build\Extensions\Networking\Runtime\NetworkIdentity.cs:659 
-  at UnityEngine.Networking.ClientScene.OnRPCMessage (UnityEngine.Networking.NetworkMessage netMsg) [0x00072] in C:\buildslave\unity\build\Extensions\Networking\Runtime\ClientScene.cs:748 
-  at UnityEngine.Networking.NetworkConnection.HandleReader (UnityEngine.Networking.NetworkReader reader, Int32 receivedSize, Int32 channelId) [0x00130] in C:\buildslave\unity\build\Extensions\Networking\Runtime\NetworkConnection.cs:468 
-  at UnityEngine.Networking.NetworkConnection.HandleBytes (System.Byte[] buffer, Int32 receivedSize, Int32 channelId) [0x0000c] in C:\buildslave\unity\build\Extensions\Networking\Runtime\NetworkConnection.cs:424 
-  at UnityEngine.Networking.NetworkConnection.TransportRecieve (System.Byte[] bytes, Int32 numBytes, Int32 channelId) [0x00001] in C:\buildslave\unity\build\Extensions\Networking\Runtime\NetworkConnection.cs:576 
-  at UnityEngine.Networking.NetworkClient.Update () [0x001d5] in C:\buildslave\unity\build\Extensions\Networking\Runtime\NetworkClient.cs:735 
-  at UnityEngine.Networking.NetworkClient.UpdateClients () [0x00024] in C:\buildslave\unity\build\Extensions\Networking\Runtime\NetworkClient.cs:950 
-  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00006] in C:\buildslave\unity\build\Extensions\Networking\Runtime\NetworkIdentity.cs:1089 
- 
-(Filename: C:/Users/Pjaer/Desktop/1935/1935/Assets/Scripts/Unit.cs Line: 167)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at Unit.RpcDestinationReached () [0x0001b] in C:\Users\Pjaer\Desktop\1935\1935\Assets\Scripts\Unit.cs:167 
-  at Unit.InvokeRpcRpcDestinationReached (UnityEngine.Networking.NetworkBehaviour obj, UnityEngine.Networking.NetworkReader reader) [0x00000] in <filename unknown>:0 
-  at UnityEngine.Networking.NetworkIdentity.HandleRPC (Int32 cmdHash, UnityEngine.Networking.NetworkReader reader) [0x00144] in C:\buildslave\unity\build\Extensions\Networking\Runtime\NetworkIdentity.cs:659 
-  at UnityEngine.Networking.ClientScene.OnRPCMessage (UnityEngine.Networking.NetworkMessage netMsg) [0x00072] in C:\buildslave\unity\build\Extensions\Networking\Runtime\ClientScene.cs:748 
-  at UnityEngine.Networking.NetworkConnection.HandleReader (UnityEngine.Networking.NetworkReader reader, Int32 receivedSize, Int32 channelId) [0x00130] in C:\buildslave\unity\build\Extensions\Networking\Runtime\NetworkConnection.cs:468 
-  at UnityEngine.Networking.NetworkConnection.HandleBytes (System.Byte[] buffer, Int32 receivedSize, Int32 channelId) [0x0000c] in C:\buildslave\unity\build\Extensions\Networking\Runtime\NetworkConnection.cs:424 
-  at UnityEngine.Networking.NetworkConnection.TransportRecieve (System.Byte[] bytes, Int32 numBytes, Int32 channelId) [0x00001] in C:\buildslave\unity\build\Extensions\Networking\Runtime\NetworkConnection.cs:576 
-  at UnityEngine.Networking.NetworkClient.Update () [0x001d5] in C:\buildslave\unity\build\Extensions\Networking\Runtime\NetworkClient.cs:735 
-  at UnityEngine.Networking.NetworkClient.UpdateClients () [0x00024] in C:\buildslave\unity\build\Extensions\Networking\Runtime\NetworkClient.cs:950 
-  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00006] in C:\buildslave\unity\build\Extensions\Networking\Runtime\NetworkIdentity.cs:1089 
- 
-(Filename: C:/Users/Pjaer/Desktop/1935/1935/Assets/Scripts/Unit.cs Line: 167)
+(Filename: C:/buildslave/unity/build/Extensions/Networking/Runtime/NetworkManager.cs Line: 1125)
 
 Setting up 1 worker threads for Enlighten.
-  Thread -> id: 1f40 -> priority: 1 
+  Thread -> id: 1554 -> priority: 1 
