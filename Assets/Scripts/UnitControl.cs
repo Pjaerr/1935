@@ -14,12 +14,16 @@ public class UnitControl : NetworkBehaviour
 		thisUnit.destination = pinPos;
 	}
 
+
+
+	/*CmdSpawnUnit() takes a string, a position and a parent nation. Using that data it will instantiate a gameobject
+	passing in to Resources.Load() the string given. Once instantiated, it will spawn that gameobject on the server.
+	The gameobject being a unit. It will also set the units parent nation to the passed in Nation enum.*/
 	[Command]
 	public void CmdSpawnUnit(string type, Vector2 pos, GameManager.Nation parentNation)
 	{
-		Debug.Log("Nation: " + parentNation + " @ UnitControl.cs::CmdSpawnUnit();");
+		Debug.Log("Units Parent Nation: " + parentNation + " @ UnitControl.cs::CmdSpawnUnit();");
 		GameObject go = (GameObject)Instantiate(Resources.Load(type, typeof(GameObject)), pos, Quaternion.identity);
-		go.GetComponent<Unit>().parentNation = parentNation;
 		
 		NetworkServer.Spawn(go);
 	}

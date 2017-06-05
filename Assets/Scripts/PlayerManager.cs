@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class PlayerManager : NetworkBehaviour 
 {
-	public Text nationDebugText;
-	[SerializeField] GameObject infantryUnit;
 	public GameManager.Nation thisNation;	//This nations nation enum.
 
 	/*This nations values in order of:
@@ -20,30 +18,13 @@ public class PlayerManager : NetworkBehaviour
 
 	void Start() 
 	{
-		nationDebugText = GameObject.Find("nationDebugText").GetComponentInChildren<Text>();
 		Debug.Log("Player with ID: " + GetComponent<NetworkIdentity>().netId + " has connected!");
-		
-		//this nation is france unless another client exists, then germany.
-		if (isServer)
-		{
-			
-			thisNation = GameManager.Nation.France;
-		}
-		else
-		{
-			thisNation = GameManager.Nation.Germany;
-		}
-
-		//TRY AND MAKE THE CLIENT GERMANY INSTEAD OF DEFAULTING TO FRANCE.
 
 		if (!isLocalPlayer)
 		{
 			return;
 		}
 
-		
-
-		
 		nationValues = new float[5] {1, 1000, 500, 500, 500};	//Initialising the nation values.
 
 		
