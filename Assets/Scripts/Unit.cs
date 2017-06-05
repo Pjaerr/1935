@@ -48,6 +48,15 @@ public class Unit : NetworkBehaviour
 		trans = GetComponent<Transform>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		movementSpeed = GameManager.singleton.defaultUnitMovementSpeed * movementSpeedScalingFactor;
+
+		if (!isVisible)
+		{
+			spriteRenderer.enabled = false;
+		}
+		else
+		{
+			spriteRenderer.enabled = true;
+		}
 	}
 	public void unitUpdate()
 	{
@@ -94,9 +103,6 @@ public class Unit : NetworkBehaviour
 	[ClientRpc]
 	public void RpcSetAccessMatrix()
 	{	
-		//PARENT NATION OF THIS UNIT ON THE CLIENT IS THE DEFAULT PARENT NATION UK.
-
-		GameManager.singleton.client.GetComponent<PlayerManager>().CmdPrintNation(parentNation);
 		/*If this unit belongs to the nation this client is currently registered as.*/
 		if (parentNation == GameManager.singleton.thisNation)
 		{
