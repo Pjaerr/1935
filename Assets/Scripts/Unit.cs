@@ -44,7 +44,7 @@ public class Unit : NetworkBehaviour
 	for code that occurs for all units.*/
 	public void unitStart()
 	{
-		RpcSetAccessMatrix();	//Allocate access for this unit to the client.
+		RpcInitializeAccessMatrix();	//Allocate access for this unit to the client.
 		trans = GetComponent<Transform>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		clientUnitControl = GameManager.singleton.client.GetComponent<UnitControl>();
@@ -114,10 +114,13 @@ public class Unit : NetworkBehaviour
 		setVisibility();
 	}
 
-	/*When called, it gets called on all clients and will set the access matrix for this unit.*/
+	/*Called in unitStart(), will make an RPC call to all clients, checking if the parentNation of their version of
+	this unit is the same as their locally stored thisNation and setting the unit access for their version of the unit
+	accordingly. This code is also called on the server.*/
+
 	[ClientRpc]
-	public void RpcSetAccessMatrix()
-	{	
+	public void RpcInitializeAccessMatrix()
+	{
 		/*If this unit belongs to the nation this client is currently registered as.*/
 		if (parentNation == GameManager.singleton.thisNation)
 		{
