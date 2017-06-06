@@ -22,22 +22,22 @@ public class Unit : NetworkBehaviour
 	private Transform trans; //This object's transform.
 	private SpriteRenderer spriteRenderer;	//This object's sprite renderer.
 	[SerializeField] private GameObject pinPrefab;	//The pin that will be instantiated.
-	[HideInInspector] private GameObject pin;	//The instantiated pin as a game object.
+	private GameObject pin;	//The instantiated pin as a game object.
 
 	/*UI*/
 	[SerializeField] private GameObject unitUI;
 
 	/*CHECKS*/
 	[SyncVar]
-	public GameManager.Nation parentNation;	//This unit's parent nation.
+	private GameManager.Nation parentNation;	//This unit's parent nation.
 
 	private bool isVisible = false;			//Check to see if visible before making it visible.
 	private bool isInteractable = false;
-	public bool isMoving = false;
+	[HideInInspector] public bool isMoving = false;
 	private bool pinPlaced = false;	//Used to control pin placement.
 	private bool pinActive = false;	//Used to initiate pin placement.
 
-	/*MONOBEHAVOUR TEMPLATES*/
+	private UnitControl clientUnitControl;
 
 	/*Function used to update this Unit.cs class. This allows the actual monobehaviour Update()
 	to be called on the classes that inherit from Unit.cs. These functions should only be used
@@ -47,16 +47,9 @@ public class Unit : NetworkBehaviour
 		RpcSetAccessMatrix();	//Allocate access for this unit to the client.
 		trans = GetComponent<Transform>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
+		clientUnitControl = GameManager.singleton.client.GetComponent<UnitControl>();
 		movementSpeed = GameManager.singleton.defaultUnitMovementSpeed * movementSpeedScalingFactor;
-
-		if (!isVisible)
-		{
-			spriteRenderer.enabled = false;
-		}
-		else
-		{
-			spriteRenderer.enabled = true;
-		}
+		GameManager.singleton.units.Add(this);
 	}
 	public void unitUpdate()
 	{
@@ -70,14 +63,33 @@ public class Unit : NetworkBehaviour
 		}
 	}
 
-	/*MONOBEHAVIOUR FUNCTIONS*/
 	/*Calls a function when mouse clicks on the collider attached to this.gameObject. */
 	void OnMouseDown()
 	{
 		DisplayUnitUI(true);
 	}
 
-	//TODO: Tidy up access matrix code. Maybe think about using arrays, lists of somesort of the conditions.
+	public void setParentNation(GameManager.Nation nation)
+	{
+		parentNation = nation;
+	}
+
+	/*Sets the visibility of this unit depending upon whether isVisible is true or not.
+	Should be called on a change of the access matrix to ensure that the data is up to date.*/
+	private void setVisibility()
+	{
+		if (!isVisible)
+		{
+			spriteRenderer.enabled = false;
+		}
+		else
+		{
+			spriteRenderer.enabled = true;
+		}
+	}
+
+	/*Used to set the access level for this unit on the client it is called on. Will only set bools
+	and call the relevant checks to ensure data is up to date.*/
 	private void UnitAccessMatrix(int level)
 	{
 		/*Access Levels: 0 = Max access, 1 = Limited access, 2 = No Access*/
@@ -98,8 +110,11 @@ public class Unit : NetworkBehaviour
 			isVisible = false;
 			isInteractable = false;
 		}
+		
+		setVisibility();
 	}
 
+	/*When called, it gets called on all clients and will set the access matrix for this unit.*/
 	[ClientRpc]
 	public void RpcSetAccessMatrix()
 	{	
@@ -110,7 +125,7 @@ public class Unit : NetworkBehaviour
 		}
 		else
 		{
-			UnitAccessMatrix(2);
+			UnitAccessMatrix(1);
 		}
 	}
 
@@ -150,8 +165,7 @@ public class Unit : NetworkBehaviour
 
 		if (pinPlaced)
 		{
-			GameManager.singleton.client.GetComponent<UnitControl>().CmdPinPlaced(this.gameObject, pin.transform.position);
-
+			clientUnitControl.CmdPinPlaced(this.gameObject, pin.transform.position);
 		}
 		else
 		{
@@ -162,7 +176,7 @@ public class Unit : NetworkBehaviour
 	}
 
 	[ClientRpc]
-	void RpcDestinationReached()	//Function sent back to all clients once the server unit has reached its destination.
+	private void RpcDestinationReached()	//Function sent back to all clients once the server unit has reached its destination.
 	{
 		isMoving = false;
 		if (!isServer)

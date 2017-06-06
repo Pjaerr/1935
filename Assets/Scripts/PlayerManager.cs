@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class PlayerManager : NetworkBehaviour 
 {
 	public GameManager.Nation thisNation;	//This nations nation enum.
+	private ProvinceManagement provinceManagement;
+	private UnitControl unitControl;
 
 	/*This nations values in order of:
 	0 = Happiness
@@ -25,11 +27,11 @@ public class PlayerManager : NetworkBehaviour
 			return;
 		}
 		
+		initialiseReferences();
+
 		thisNation = (GameManager.Nation)Random.Range(0, 10);
 
 		nationValues = new float[5] {1, 1000, 500, 500, 500};	//Initialising the nation values.
-
-		CmdDebugNation(thisNation);
 		
 		/*Storing a local copy of this player's data so that it can be accessed for
 		local use such as UI or Camera Control. As mentioned in the GameManager, the
@@ -41,19 +43,29 @@ public class PlayerManager : NetworkBehaviour
 		the PlayerManager has been started via the NetworkManager. This can be removed once
 		the starting of a game is seperated from the actual game scene itself.*/
 		
-		GetComponent<ProvinceManagement>().NetworkStart();	
-		GetComponent<UnitControl>().CmdSpawnUnit("infantryUnitV1", GetComponent<ProvinceManagement>().provinces[1].trans.position, thisNation);
+		provinceManagement.NetworkStart();	
+		CmdSetAccessMatrixOfAllUnits();
+		unitControl.CmdSpawnUnit("infantryUnitV1", provinceManagement.provinces[1].trans.position, thisNation);
+	}
+
+	private void initialiseReferences()
+	{
+		provinceManagement = GetComponent<ProvinceManagement>();
+		unitControl = GetComponent<UnitControl>();
 	}
 
 	[Command]
-	void CmdDebugNation(GameManager.Nation nation)
+	void CmdSetAccessMatrixOfAllUnits()
 	{
-		Debug.Log("Nation inside of local PlayerManager is " + nation);
-	}
+		List<Unit> units = GameManager.singleton.units;
 
-	[Command]
-	public void CmdPrintNation(GameManager.Nation nat)
-	{
-		Debug.Log("... nation is: " + nat);
+		if (units.Count > 0)
+		{
+			for (int i = 0; i < units.Count; i++)
+			{
+				Debug.Log("Setting access matrix for unit " + i);
+				units[i].RpcSetAccessMatrix();
+			}
+		}
 	}
 }

@@ -6,6 +6,8 @@ using UnityEngine.Networking;
 
 public class GameManager : MonoBehaviour 
 {
+	public List<Unit> units;	//List of all units in the game, only used locally by the server.
+
 	public static bool networkIsConnected = false;
 
 	/*Default Attrbutes*/
@@ -17,8 +19,10 @@ public class GameManager : MonoBehaviour
 	[HideInInspector] public Transform thisNationTransform;
 
 	/*Nation Enumerator[s]*/
-	public enum Nation{Austria, Belgium, Denmark, Finland, France, Germany, Netherlands, Norway, Poland, Portugal, Spain, Sweden, Switzerland, UK, SIreland};
-	public Nation thisNation;	//The Nation that this client is playing as.
+	public enum Nation{Austria, Belgium, Denmark, Finland, France, Germany, 
+	Netherlands, Norway, Poland, Portugal, Spain, Sweden, Switzerland, UK, SIreland};
+
+	public Nation thisNation;	//The nation of the client stored locally.
 
 	/*Nation Values*/
 	[HideInInspector] public float[] nationValues;
@@ -52,7 +56,7 @@ public class GameManager : MonoBehaviour
 		InitializeSingleton();
 		SetWorldMap();
 	}
-	
+
 	public void SetLocalValues(Nation thisNationNetworked, float[] nationValuesNetworked, GameObject playerManager)
 	{
 		client = playerManager;

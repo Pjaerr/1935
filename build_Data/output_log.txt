@@ -17,14 +17,14 @@ Platform assembly: C:\Users\Pjaer\Desktop\1935\1935\build_Data\Managed\UnityEngi
 Loading C:\Users\Pjaer\Desktop\1935\1935\build_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
 Platform assembly: C:\Users\Pjaer\Desktop\1935\1935\build_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll (this message is harmless)
 Loading C:\Users\Pjaer\Desktop\1935\1935\build_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll into Unity Child Domain
-- Completed reload, in  0.076 seconds
+- Completed reload, in  0.044 seconds
 Platform assembly: C:\Users\Pjaer\Desktop\1935\1935\build_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\Pjaer\Desktop\1935\1935\build_Data\Managed\System.dll (this message is harmless)
 desktop: 1280x720 59Hz; virtual: 3200x1080 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
 <RI> Initialized touch support.
-UnloadTime: 1.629360 ms
+UnloadTime: 1.900747 ms
 Player with ID: 1 has connected
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
@@ -37,6 +37,21 @@ Player with ID: 3 has connected
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
+NullReferenceException: Object reference not set to an instance of an object
+  at Unit.UnitAccessMatrix (Int32 level) [0x00000] in <filename unknown>:0 
+  at Unit.RpcSetAccessMatrix () [0x00000] in <filename unknown>:0 
+  at Unit.InvokeRpcRpcSetAccessMatrix (UnityEngine.Networking.NetworkBehaviour obj, UnityEngine.Networking.NetworkReader reader) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.HandleRPC (Int32 cmdHash, UnityEngine.Networking.NetworkReader reader) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ClientScene.OnRPCMessage (UnityEngine.Networking.NetworkMessage netMsg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.HandleReader (UnityEngine.Networking.NetworkReader reader, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.HandleBytes (System.Byte[] buffer, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.TransportRecieve (System.Byte[] bytes, Int32 numBytes, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.Update () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.UpdateClients () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
 RPC Function RpcSetAccessMatrix called on client.
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
@@ -48,12 +63,5 @@ NullReferenceException
  
 (Filename:  Line: -1)
 
-NullReferenceException
-  at (wrapper managed-to-native) UnityEngine.Transform:IsChildOf (UnityEngine.Transform)
-  at ProvinceManagement.provinceIsClicked () [0x00000] in <filename unknown>:0 
-  at ProvinceManagement.Update () [0x00000] in <filename unknown>:0 
- 
-(Filename:  Line: -1)
-
 Setting up 1 worker threads for Enlighten.
-  Thread -> id: 18b8 -> priority: 1 
+  Thread -> id: 1ddc -> priority: 1 

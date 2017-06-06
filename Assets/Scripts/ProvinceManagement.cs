@@ -80,7 +80,7 @@ public class ProvinceManagement : MonoBehaviour
 
 	void Update()
 	{
-		if (provinceIsClicked())
+		if (provinceIsClicked() && !UI.singleton.provinceUIActive)
 		{
 			UI.singleton.ActivateProvinceManagementUI(true);
 			UI.singleton.LoadProvinceValues(activeProvince);
