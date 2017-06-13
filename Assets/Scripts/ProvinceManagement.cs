@@ -5,6 +5,7 @@ using UnityEngine;
 public class Building
 {
 	GameObject UI;	//The gameojbect that encapsulates the UI associated with this building.
+	public Transform trans;
 
 	/*0: Economy, 1: Food, 2: Iron, 3: Coal*/
 	private int[] modifiers = new int[4] {0, 0, 0, 0};	//Amt by which province values are changed.
@@ -13,6 +14,7 @@ public class Building
 	public Building(GameObject setUI)
 	{
 		UI = setUI;
+		trans = UI.GetComponent<Transform>();
 	}
 
 	///0: Economy, 1: Food, 2: Iron, 3: Coal
@@ -52,9 +54,12 @@ public class Province
 	public int[] coal = new int[2] {0, 0};
 	public int[] population = new int[2] {0, 0};
 
+	public List<Building> inactiveBuildings = new List<Building>();
+	public List<Building> activeBuildings = new List<Building>();
+
 	/*The object constructor. Takes a transform which will be assigned as this provinces
 	transform, it will automatically grab the provinces province point if it exists*/
-	public Province(Transform provinceTransform)
+	public Province(Transform provinceTransform, List<Building> defaultBuildings)
 	{
 		trans = provinceTransform;
 
@@ -64,6 +69,13 @@ public class Province
 		}
 
 		name = trans.name;
+
+		/*Grab the buildings from the ProvinceManagement::defaultBuildings list and assign
+		them to this province's inactiveBuildings list.*/
+		for (int i = 0; i < defaultBuildings.Count; i++)
+		{
+			inactiveBuildings.Add(defaultBuildings[i]);
+		}
 	}
 
 	public void UpdateValues()
@@ -75,12 +87,61 @@ public class Province
 		coal[0] += coal[1];
 		population[0] += population[1];
 	}
+
+	/*Takes a building to move, and whether to place it in the active/inactive list.*/
+	public void moveBuilding(Building building, bool isActive)
+	{
+		if (isActive)
+		{
+			inactiveBuildings.Remove(building);	//Remove referenced building from previous building list.
+			activeBuildings.Add(building);	//Add referenced building to the new building list.
+			building.trans.SetParent(UI.singleton.activeBuildingsPanel); //Set the referenced building's parent to the relevant active/inactive object.
+		}
+		else
+		{
+			activeBuildings.Remove(building);
+			inactiveBuildings.Add(building);
+			building.trans.SetParent(UI.singleton.inactiveBuildingsPanel);
+		}
+
+		repositionBuildings(inactiveBuildings);
+		repositionBuildings(activeBuildings);
+	}
+
+	/*Takes a List<Building> and loops through it, setting the x and y position
+	of each building in the list relative to its position in the list.*/
+	private void repositionBuildings(List<Building> buildings)
+	{
+		for (int i = 0; i < buildings.Count; i++)
+		{
+			float yPos;
+			float xPos = 115;
+
+			switch(i)
+			{
+				case 0:
+					yPos = 100;
+					break;
+				case 1:
+					yPos = 0;
+					break;
+				case 2:
+					yPos = -100;
+					break;
+				default:
+					yPos = 100;
+					break;
+			}
+
+			buildings[i].trans.position = new Vector2(xPos, yPos);
+		}
+	}
 }
 
 public class ProvinceManagement : MonoBehaviour 
 {
 	public List<Province> provinces;	//List of provinces belonging to this nation. Province objects.
-
+	
 	private Transform trans;	//This nations transform.
 	bool isRaised = false;	//Is the active province currently raised.
 	private Province activeProvince;	//The province that is currently active.
@@ -90,39 +151,36 @@ public class ProvinceManagement : MonoBehaviour
 	public void NetworkStart()
 	{
 		trans = GameManager.singleton.thisNationTransform;
+		initialiseBuildings();
 		InitialiseProvinces();
 	}
 
-	/*[SerializeField] GameObject[] buildingsUI = new GameObject[3];
+	/*The list of Building objects, by which the province objects will initialise their active and inactive lists. */
 	private List<Building> defaultBuildings;
 
+	/*Takes the building UI GameObject's and creates a new Building object for each of them
+	whilst also assigning the created object's to the defaultBuildings list.*/
 	void initialiseBuildings()
 	{
-		for (int i = 0; i < 3; i++)
+		defaultBuildings = new List<Building>();
+
+		for (int i = 0; i < UI.singleton.buildings.Length; i++)
 		{
-			defaultBuildings.Add(new Building(buildingsUI[i]));
-			defaultBuildings[i].setModifiers(new int[4] {10, 10, 10, 10});
-			defaultBuildings[i].setCost(new int[4] {10, 0, 10, 0});
+			defaultBuildings.Add(new Building(UI.singleton.buildings[i]));
 		}
-	}*/
+	}
+
+	/*Takes the provinces list and for every child of this nation, create a new province 
+	assigning that child transform as the transform of the province object. Also passing
+	in the defaultBuildings list to every province object that is created.*/
 	void InitialiseProvinces()
 	{
 		provinces = new List<Province>();
 
 		for (int i = 0; i < trans.childCount; i++)
 		{
-			AddProvince(new Province(trans.GetChild(i)));
+			provinces.Add(new Province(trans.GetChild(i), defaultBuildings));
 		}
-	}
-
-	/*Removes and/or adds a province to this nations province list. */
-	void AddProvince(Province province)
-	{
-		provinces.Add(province);
-	}
-	void RemoveProvince(Province province)
-	{
-		provinces.Remove(province);
 	}
 
 	void Update()

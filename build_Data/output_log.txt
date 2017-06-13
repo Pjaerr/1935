@@ -17,109 +17,84 @@ Platform assembly: C:\Users\Pjaer\Desktop\1935\1935\build_Data\Managed\UnityEngi
 Loading C:\Users\Pjaer\Desktop\1935\1935\build_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
 Platform assembly: C:\Users\Pjaer\Desktop\1935\1935\build_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll (this message is harmless)
 Loading C:\Users\Pjaer\Desktop\1935\1935\build_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll into Unity Child Domain
-<<<<<<< HEAD
-- Completed reload, in  0.044 seconds
-=======
-- Completed reload, in  0.309 seconds
->>>>>>> origin/master
+- Completed reload, in  0.199 seconds
 Platform assembly: C:\Users\Pjaer\Desktop\1935\1935\build_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\Pjaer\Desktop\1935\1935\build_Data\Managed\System.dll (this message is harmless)
 desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
 <RI> Initialized touch support.
-<<<<<<< HEAD
-UnloadTime: 1.900747 ms
-=======
-UnloadTime: 2.604180 ms
-Initialize engine version: 5.5.2f1 (3829d7f588f3)
-GfxDevice: creating device client; threaded=1
-Direct3D:
-    Version:  Direct3D 11.0 [level 11.1]
-    Renderer: Intel(R) HD Graphics 5500 (ID=0x1616)
-    Vendor:   Intel
-    VRAM:     2111 MB
-    Driver:   20.19.15.4549
-Begin MonoManager ReloadAssembly
-Platform assembly: C:\Users\Pjaer\Desktop\1935\1935\build_Data\Managed\UnityEngine.dll (this message is harmless)
-Loading C:\Users\Pjaer\Desktop\1935\1935\build_Data\Managed\UnityEngine.dll into Unity Child Domain
-Platform assembly: C:\Users\Pjaer\Desktop\1935\1935\build_Data\Managed\Assembly-CSharp.dll (this message is harmless)
-Loading C:\Users\Pjaer\Desktop\1935\1935\build_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
-Platform assembly: C:\Users\Pjaer\Desktop\1935\1935\build_Data\Managed\UnityEngine.UI.dll (this message is harmless)
-Loading C:\Users\Pjaer\Desktop\1935\1935\build_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
-Platform assembly: C:\Users\Pjaer\Desktop\1935\1935\build_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
-Loading C:\Users\Pjaer\Desktop\1935\1935\build_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-Platform assembly: C:\Users\Pjaer\Desktop\1935\1935\build_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll (this message is harmless)
-Loading C:\Users\Pjaer\Desktop\1935\1935\build_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll into Unity Child Domain
-- Completed reload, in  0.028 seconds
-Platform assembly: C:\Users\Pjaer\Desktop\1935\1935\build_Data\Managed\System.Core.dll (this message is harmless)
-Platform assembly: C:\Users\Pjaer\Desktop\1935\1935\build_Data\Managed\System.dll (this message is harmless)
-desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
-<RI> Initializing input.
-<RI> Input initialized.
-<RI> Initialized touch support.
-UnloadTime: 2.928419 ms
->>>>>>> origin/master
+UnloadTime: 3.507851 ms
 Player with ID: 1 has connected
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-Nation inside of local PlayerManager is Denmark
+RPC Function RpcInitializeAccessMatrix called on client.
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-thisNation is Denmark @ UnitControl.cs
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-Player with ID: 3 has connected
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-<<<<<<< HEAD
 NullReferenceException: Object reference not set to an instance of an object
-  at Unit.UnitAccessMatrix (Int32 level) [0x00000] in <filename unknown>:0 
-  at Unit.RpcSetAccessMatrix () [0x00000] in <filename unknown>:0 
-  at Unit.InvokeRpcRpcSetAccessMatrix (UnityEngine.Networking.NetworkBehaviour obj, UnityEngine.Networking.NetworkReader reader) [0x00000] in <filename unknown>:0 
-  at UnityEngine.Networking.NetworkIdentity.HandleRPC (Int32 cmdHash, UnityEngine.Networking.NetworkReader reader) [0x00000] in <filename unknown>:0 
-  at UnityEngine.Networking.ClientScene.OnRPCMessage (UnityEngine.Networking.NetworkMessage netMsg) [0x00000] in <filename unknown>:0 
-  at UnityEngine.Networking.NetworkConnection.HandleReader (UnityEngine.Networking.NetworkReader reader, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
-  at UnityEngine.Networking.NetworkConnection.HandleBytes (System.Byte[] buffer, Int32 receivedSize, Int32 channelId) [0x00000] in <filename unknown>:0 
-  at UnityEngine.Networking.NetworkConnection.TransportRecieve (System.Byte[] bytes, Int32 numBytes, Int32 channelId) [0x00000] in <filename unknown>:0 
-  at UnityEngine.Networking.NetworkClient.Update () [0x00000] in <filename unknown>:0 
-  at UnityEngine.Networking.NetworkClient.UpdateClients () [0x00000] in <filename unknown>:0 
-  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
-=======
-Player with ID: 1 has connected
->>>>>>> origin/master
+  at Unit.unitStart () [0x00000] in <filename unknown>:0 
+  at InfantryUnit.Start () [0x00000] in <filename unknown>:0 
  
 (Filename:  Line: -1)
 
-<<<<<<< HEAD
-RPC Function RpcSetAccessMatrix called on client.
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-=======
-RPC Function RpcInitializeAccessMatrix called on client.
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
 Player with ID: 3 has connected
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-Nation inside of local PlayerManager is Belgium
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-thisNation is Belgium @ UnitControl.cs
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
 RPC Function RpcInitializeAccessMatrix called on client.
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
->>>>>>> origin/master
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Transform:IsChildOf (UnityEngine.Transform)
+  at ProvinceManagement.provinceIsClicked () [0x00000] in <filename unknown>:0 
+  at ProvinceManagement.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Transform:IsChildOf (UnityEngine.Transform)
+  at ProvinceManagement.provinceIsClicked () [0x00000] in <filename unknown>:0 
+  at ProvinceManagement.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Transform:IsChildOf (UnityEngine.Transform)
+  at ProvinceManagement.provinceIsClicked () [0x00000] in <filename unknown>:0 
+  at ProvinceManagement.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Transform:IsChildOf (UnityEngine.Transform)
+  at ProvinceManagement.provinceIsClicked () [0x00000] in <filename unknown>:0 
+  at ProvinceManagement.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Transform:IsChildOf (UnityEngine.Transform)
+  at ProvinceManagement.provinceIsClicked () [0x00000] in <filename unknown>:0 
+  at ProvinceManagement.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Transform:IsChildOf (UnityEngine.Transform)
+  at ProvinceManagement.provinceIsClicked () [0x00000] in <filename unknown>:0 
+  at ProvinceManagement.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Transform:IsChildOf (UnityEngine.Transform)
+  at ProvinceManagement.provinceIsClicked () [0x00000] in <filename unknown>:0 
+  at ProvinceManagement.Update () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
 
 NullReferenceException
   at (wrapper managed-to-native) UnityEngine.Transform:IsChildOf (UnityEngine.Transform)
@@ -129,10 +104,4 @@ NullReferenceException
 (Filename:  Line: -1)
 
 Setting up 1 worker threads for Enlighten.
-<<<<<<< HEAD
-  Thread -> id: 1ddc -> priority: 1 
-=======
-  Thread -> id: 212c -> priority: 1 
-Setting up 1 worker threads for Enlighten.
-  Thread -> id: 254 -> priority: 1 
->>>>>>> origin/master
+  Thread -> id: 788 -> priority: 1 

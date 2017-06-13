@@ -35,6 +35,11 @@ public class UI : MonoBehaviour
 	[SerializeField] Text nationText;	//The text that shows the name of the currently played nation.
 	[SerializeField] Image nationFlag;	//The UI image that shows the flag of the currently played nation.
 
+	[SerializeField] GameObject buildingUI;	//The gameobject that holds the building management UI.
+	public GameObject[] buildings = new GameObject[3];	//The buildings. Barracks, Refinery & Fortress.
+	public Transform activeBuildingsPanel;
+	public Transform inactiveBuildingsPanel;
+
 
 	public static UI singleton = null;	//Singleton instance.
 
@@ -141,5 +146,10 @@ public class UI : MonoBehaviour
 		{
 			provinceUIActive = false;
 		}
+	}
+
+	public void ActivateBuildingManagementUI(bool active)
+	{
+		buildingUI.SetActive(active);
 	}
 }

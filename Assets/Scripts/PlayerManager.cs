@@ -30,6 +30,7 @@ public class PlayerManager : NetworkBehaviour
 		initialiseReferences();
 
 		thisNation = (GameManager.Nation)Random.Range(0, 10);
+		
 
 		nationValues = new float[5] {1, 1000, 500, 500, 500};	//Initialising the nation values.
 		
