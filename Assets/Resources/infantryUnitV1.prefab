@@ -350,7 +350,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114371553626034808}
-        m_MethodName: DisplayUI
+        m_MethodName: DisplayUnitUI
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -377,7 +377,6 @@ MonoBehaviour:
   movementSpeedScalingFactor: 1
   pinPrefab: {fileID: 1672319893159614, guid: bc35ff06b4258364986b26ece1a0f759, type: 2}
   unitUI: {fileID: 1212511304698696}
-  parentNation: 13
   isMoving: 0
 --- !u!114 &114439334379641746
 MonoBehaviour:

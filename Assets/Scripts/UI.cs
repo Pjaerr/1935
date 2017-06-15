@@ -37,8 +37,8 @@ public class UI : MonoBehaviour
 
 	[SerializeField] GameObject buildingUI;	//The gameobject that holds the building management UI.
 	public GameObject[] buildings = new GameObject[3];	//The buildings. Barracks, Refinery & Fortress.
-	public Transform activeBuildingsPanel;
-	public Transform inactiveBuildingsPanel;
+	public GameObject activeBuildingsPanel;
+	public GameObject inactiveBuildingsPanel;
 
 
 	public static UI singleton = null;	//Singleton instance.

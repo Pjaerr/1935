@@ -2490,6 +2490,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 090e83f463d31c9469eba409ab32ce5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trans: {fileID: 0}
   provinces: []
   provincePoints: []
 --- !u!1 &272820109

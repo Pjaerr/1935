@@ -2,142 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Building
-{
-	GameObject UI;	//The gameojbect that encapsulates the UI associated with this building.
-	public Transform trans;
-
-	/*0: Economy, 1: Food, 2: Iron, 3: Coal*/
-	private int[] modifiers = new int[4] {0, 0, 0, 0};	//Amt by which province values are changed.
-	private int[] cost = new int[4] {0, 0, 0, 0};
-
-	public Building(GameObject setUI)
-	{
-		UI = setUI;
-		trans = UI.GetComponent<Transform>();
-	}
-
-	///0: Economy, 1: Food, 2: Iron, 3: Coal
-	public void setModifiers(int[] valuesToSetBy)
-	{
-		modifiers = valuesToSetBy;
-	}
-	///0: Economy, 1: Food, 2: Iron, 3: Coal
-	public int[] getModifiers()
-	{
-		return modifiers;
-	}
-	///0: Economy, 1: Food, 2: Iron, 3: Coal
-	public void setCost(int[] valuesToSetBy)
-	{
-		cost = valuesToSetBy;
-	}
-	///0: Economy, 1: Food, 2: Iron, 3: Coal
-	public int[] getCost()
-	{
-		return cost;
-	}
-}
-
-public class Province
-{
-	public string name;
-	public Transform trans;
-	Transform provincePoint;
-
-	/*These are the data values. value[0] is the actual value and value[1] is the amount
-	by which the first value will be changed every so often*/
-	public int[] happiness = new int[2] {0, 0};
-	public int[] economy = new int[2] {0, 0};
-	public int[] food = new int[2] {0, 0};
-	public int[] iron = new int[2] {0, 0};
-	public int[] coal = new int[2] {0, 0};
-	public int[] population = new int[2] {0, 0};
-
-	public List<Building> inactiveBuildings = new List<Building>();
-	public List<Building> activeBuildings = new List<Building>();
-
-	/*The object constructor. Takes a transform which will be assigned as this provinces
-	transform, it will automatically grab the provinces province point if it exists*/
-	public Province(Transform provinceTransform, List<Building> defaultBuildings)
-	{
-		trans = provinceTransform;
-
-		if (provinceTransform.childCount > 0)
-		{
-			provincePoint = provinceTransform.GetChild(0);
-		}
-
-		name = trans.name;
-
-		/*Grab the buildings from the ProvinceManagement::defaultBuildings list and assign
-		them to this province's inactiveBuildings list.*/
-		for (int i = 0; i < defaultBuildings.Count; i++)
-		{
-			inactiveBuildings.Add(defaultBuildings[i]);
-		}
-	}
-
-	public void UpdateValues()
-	{
-		happiness[0] += happiness[1];
-		economy[0] += economy[1];
-		food[0] += food[1];
-		iron[0] += iron[1];
-		coal[0] += coal[1];
-		population[0] += population[1];
-	}
-
-	/*Takes a building to move, and whether to place it in the active/inactive list.*/
-	public void moveBuilding(Building building, bool isActive)
-	{
-		if (isActive)
-		{
-			inactiveBuildings.Remove(building);	//Remove referenced building from previous building list.
-			activeBuildings.Add(building);	//Add referenced building to the new building list.
-			building.trans.SetParent(UI.singleton.activeBuildingsPanel); //Set the referenced building's parent to the relevant active/inactive object.
-		}
-		else
-		{
-			activeBuildings.Remove(building);
-			inactiveBuildings.Add(building);
-			building.trans.SetParent(UI.singleton.inactiveBuildingsPanel);
-		}
-
-		repositionBuildings(inactiveBuildings);
-		repositionBuildings(activeBuildings);
-	}
-
-	/*Takes a List<Building> and loops through it, setting the x and y position
-	of each building in the list relative to its position in the list.*/
-	private void repositionBuildings(List<Building> buildings)
-	{
-		for (int i = 0; i < buildings.Count; i++)
-		{
-			float yPos;
-			float xPos = 115;
-
-			switch(i)
-			{
-				case 0:
-					yPos = 100;
-					break;
-				case 1:
-					yPos = 0;
-					break;
-				case 2:
-					yPos = -100;
-					break;
-				default:
-					yPos = 100;
-					break;
-			}
-
-			buildings[i].trans.position = new Vector2(xPos, yPos);
-		}
-	}
-}
-
 public class ProvinceManagement : MonoBehaviour 
 {
 	public List<Province> provinces;	//List of provinces belonging to this nation. Province objects.
@@ -183,12 +47,71 @@ public class ProvinceManagement : MonoBehaviour
 		}
 	}
 
+	/*Takes a list of buildings to position, and whether they are active or inactive buildings.
+	It will then set the building's parents to the relevant UI panel, and position them according
+	to their position in their Building List.*/
+	void PositionBuildingUI(List<Building> buildings, bool isActive)
+	{
+		/*Grabs the relevant UI panel depending upon whether the current building list
+		holds active or inactive buildings.*/
+		Transform activityPanel;
+
+		if (isActive)
+		{
+			activityPanel = UI.singleton.activeBuildingsPanel.transform;
+		}
+		else
+		{
+			activityPanel = UI.singleton.inactiveBuildingsPanel.transform;
+		}
+
+		/*For every building in the passed in building list, set its xPos to default, and its yPos to
+		the relevant position depending upon what position this building is in the building list.*/
+		for (int i = 0; i < buildings.Count; i++)
+		{
+			buildings[i].trans.parent = activityPanel;
+	
+			float yPos;
+			float xPos = 0;
+
+			switch(i)
+			{
+				case 0:
+					yPos = 100;
+					break;
+				case 1:
+					yPos = 0;
+					break;
+				case 2:
+					yPos = -100;
+					break;
+				default:
+					yPos = 100;
+					break;
+			}
+
+			buildings[i].trans.localPosition = new Vector2(xPos, yPos);
+		}
+	}
+
+	/*Will change the values on the local UI to match that of the currently
+	active province. This should be called when the province UI is activated.*/
+	private void LoadProvinceValues()
+	{
+		UI.singleton.LoadProvinceValues(activeProvince);	//Passes in the currently active province.
+
+		/*Positions both the active and inactive building lists for the currently active province*/
+		PositionBuildingUI(activeProvince.activeBuildings, true);
+		PositionBuildingUI(activeProvince.inactiveBuildings, false);
+	}
+
+
 	void Update()
 	{
 		if (provinceIsClicked() && !UI.singleton.provinceUIActive)
 		{
 			UI.singleton.ActivateProvinceManagementUI(true);
-			UI.singleton.LoadProvinceValues(activeProvince);
+			LoadProvinceValues();
 			RaiseProvince(true);
 		}
 		else if (!UI.singleton.provinceUIActive && !provinceIsClicked())
