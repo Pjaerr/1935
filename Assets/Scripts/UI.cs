@@ -124,12 +124,13 @@ public class UI : MonoBehaviour
 	has been activated using the UpdateValues() function. */
 	public void LoadProvinceValues(Province activeProvince)
 	{
-		UpdateValue(0, activeProvince.happiness[0], "provinceManagementUI");
-		UpdateValue(1, activeProvince.economy[0], "provinceManagementUI");
-		UpdateValue(2, activeProvince.food[0], "provinceManagementUI");
-		UpdateValue(3, activeProvince.iron[0], "provinceManagementUI");
-		UpdateValue(4, activeProvince.coal[0], "provinceManagementUI");
-		UpdateValue(5, activeProvince.population[0], "provinceManagementUI");
+
+		UpdateValue(0, activeProvince.values[4], "provinceManagementUI");
+		UpdateValue(1, activeProvince.values[0], "provinceManagementUI");
+		UpdateValue(2, activeProvince.values[1], "provinceManagementUI");
+		UpdateValue(3, activeProvince.values[2], "provinceManagementUI");
+		UpdateValue(4, activeProvince.values[3], "provinceManagementUI");
+		UpdateValue(5, activeProvince.values[5], "provinceManagementUI");
 		provinceUI[6].text = activeProvince.name;
 	}
 
