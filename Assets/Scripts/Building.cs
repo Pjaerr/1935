@@ -34,19 +34,9 @@ public class Building
 		modifiers = valuesToSetBy;
 	}
 	///0: Economy, 1: Food, 2: Iron, 3: Coal
-	public int[] getModifiers()
-	{
-		return modifiers;
-	}
-	///0: Economy, 1: Food, 2: Iron, 3: Coal
 	public void setCost(int[] valuesToSetBy)
 	{
 		cost = valuesToSetBy;
-	}
-	///0: Economy, 1: Food, 2: Iron, 3: Coal
-	public int[] getCost()
-	{
-		return cost;
 	}
 
 	public void onBuildingDeactivated()
