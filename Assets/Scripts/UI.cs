@@ -41,6 +41,38 @@ public class UI : MonoBehaviour
 	public GameObject inactiveBuildingsPanel;
 
 
+	int buildingsActivated = 0;
+	Province lastOpenedProvince;
+
+	/*activateBuilding() is called via the inspector onClick(), it is passed in a number
+	to represent which button called the function. 0 upwards in order of building heirarchy position.
+	These are set in the inspector.*/
+	public void activateBuilding(int buildingNum)
+	{
+		if (activeProvince != lastOpenedProvince)
+		{
+			buildingsActivated = 0;
+		}
+		/*Calls the currently open province's activateBuilding function, activating the
+		index of the building the button that was pressed resides on. It will increase the buildingsActivated
+		integer whenever this function is called to account for buildings being removed from the inactiveBuildings
+		List. So then if the building being asked to be activated is in a position other than the first, activate 
+		that building minus the number of already activated buildings.*/
+		if (buildingNum > 0)
+		{
+			activeProvince.activateBuilding(activeProvince.inactiveBuildings[buildingNum - buildingsActivated], true);
+		}
+		else 
+		{
+			activeProvince.activateBuilding(activeProvince.inactiveBuildings[buildingNum], true);
+		}
+		
+		buildingsActivated++;
+
+		lastOpenedProvince = activeProvince;
+		
+	}
+
 	public static UI singleton = null;	//Singleton instance.
 
 	void InitializeSingleton()
@@ -120,11 +152,12 @@ public class UI : MonoBehaviour
 		}
 	}
 
+	private Province activeProvince;
 	/*This function should update the provinceManagementUI values as per the province that
 	has been activated using the UpdateValues() function. */
-	public void LoadProvinceValues(Province activeProvince)
+	public void LoadProvinceValues(Province province)
 	{
-
+		activeProvince = province;
 		UpdateValue(0, activeProvince.values[4], "provinceManagementUI");
 		UpdateValue(1, activeProvince.values[0], "provinceManagementUI");
 		UpdateValue(2, activeProvince.values[1], "provinceManagementUI");

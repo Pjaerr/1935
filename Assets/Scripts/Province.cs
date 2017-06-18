@@ -35,7 +35,7 @@ public class Province
 		for (int i = 0; i < defaultBuildings.Count; i++)
 		{
 			inactiveBuildings.Add(defaultBuildings[i]);
-			this.inactiveBuildings[i].setParentProvince(this);
+			Debug.Log("Building " + i + " is " + inactiveBuildings[i].trans.name);
 		}
 	}
 
@@ -52,7 +52,7 @@ public class Province
 	{
 		if (isActive)
 		{
-			if (building.onBuildingActivated())	//If the building has been purchased.
+			if (building.onBuildingActivated(this))	//If the building has been purchased.
 			{
 				inactiveBuildings.Remove(building);	//Remove referenced building from previous building list.
 				activeBuildings.Add(building);	//Add referenced building to the new building list.
@@ -60,7 +60,7 @@ public class Province
 		}
 		else
 		{
-			building.onBuildingDeactivated();	//Remove modifier effects.
+			building.onBuildingDeactivated(this);	//Remove modifier effects.
 			activeBuildings.Remove(building);
 			inactiveBuildings.Add(building);
 		}	
