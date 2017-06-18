@@ -47,53 +47,7 @@ public class ProvinceManagement : MonoBehaviour
 		}
 	}
 
-	/*Takes a list of buildings to position, and whether they are active or inactive buildings.
-	It will then set the building's parents to the relevant UI panel, and position them according
-	to their position in their Building List.*/
-	void PositionBuildingUI(List<Building> buildings, bool isActive)
-	{
-		/*Grabs the relevant UI panel depending upon whether the current building list
-		holds active or inactive buildings.*/
-		Transform activityPanel;
-
-		if (isActive)
-		{
-			activityPanel = UI.singleton.activeBuildingsPanel.transform;
-		}
-		else
-		{
-			activityPanel = UI.singleton.inactiveBuildingsPanel.transform;
-		}
-
-		/*For every building in the passed in building list, set its xPos to default, and its yPos to
-		the relevant position depending upon what position this building is in the building list.*/
-		for (int i = 0; i < buildings.Count; i++)
-		{
-			buildings[i].trans.parent = activityPanel;
 	
-			float yPos;
-			float xPos = 0;
-
-			switch(i)
-			{
-				case 0:
-					yPos = 100;
-					break;
-				case 1:
-					yPos = 0;
-					break;
-				case 2:
-					yPos = -100;
-					break;
-				default:
-					yPos = 100;
-					break;
-			}
-
-			buildings[i].trans.localPosition = new Vector2(xPos, yPos);
-		}
-	}
-
 	/*Will change the values on the local UI to match that of the currently
 	active province. This should be called when the province UI is activated.*/
 	private void LoadProvinceValues()
@@ -101,8 +55,8 @@ public class ProvinceManagement : MonoBehaviour
 		UI.singleton.LoadProvinceValues(activeProvince);	//Passes in the currently active province.
 
 		/*Positions both the active and inactive building lists for the currently active province*/
-		PositionBuildingUI(activeProvince.activeBuildings, true);
-		PositionBuildingUI(activeProvince.inactiveBuildings, false);
+		UI.singleton.PositionBuildingUI(activeProvince.activeBuildings, true);
+		UI.singleton.PositionBuildingUI(activeProvince.inactiveBuildings, false);
 	}
 
 

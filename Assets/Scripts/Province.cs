@@ -35,7 +35,6 @@ public class Province
 		for (int i = 0; i < defaultBuildings.Count; i++)
 		{
 			inactiveBuildings.Add(defaultBuildings[i]);
-			Debug.Log("Building " + i + " is " + inactiveBuildings[i].trans.name);
 		}
 	}
 

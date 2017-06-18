@@ -45,6 +45,9 @@ public class Building
 		{
 			adjustProvinceModifiers(province);	//Add this building's modifiers onto the province's modifiers.
 			Debug.Log(this.trans.name + " activated on " + province.name);
+
+			trans.GetChild(2).gameObject.SetActive(false);
+
 			return true;
 		}
 		else	//If the province cannot afford this building.

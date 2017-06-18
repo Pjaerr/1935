@@ -58,6 +58,12 @@ public class UI : MonoBehaviour
 		integer whenever this function is called to account for buildings being removed from the inactiveBuildings
 		List. So then if the building being asked to be activated is in a position other than the first, activate 
 		that building minus the number of already activated buildings.*/
+
+		if (activeProvince.inactiveBuildings.Count <= 1)
+		{
+			buildingNum = 0;
+		}
+		
 		if (buildingNum > 0)
 		{
 			activeProvince.activateBuilding(activeProvince.inactiveBuildings[buildingNum - buildingsActivated], true);
@@ -66,11 +72,60 @@ public class UI : MonoBehaviour
 		{
 			activeProvince.activateBuilding(activeProvince.inactiveBuildings[buildingNum], true);
 		}
+
+		PositionBuildingUI(activeProvince.inactiveBuildings, false);
+		PositionBuildingUI(activeProvince.activeBuildings, true);
 		
 		buildingsActivated++;
 
 		lastOpenedProvince = activeProvince;
-		
+	}
+
+	/*Takes a list of buildings to position, and whether they are active or inactive buildings.
+	It will then set the building's parents to the relevant UI panel, and position them according
+	to their position in their Building List.*/
+	public void PositionBuildingUI(List<Building> buildings, bool isActive)
+	{
+		/*Grabs the relevant UI panel depending upon whether the current building list
+		holds active or inactive buildings.*/
+		Transform activityPanel;
+
+		if (isActive)
+		{
+			activityPanel = UI.singleton.activeBuildingsPanel.transform;
+		}
+		else
+		{
+			activityPanel = UI.singleton.inactiveBuildingsPanel.transform;
+		}
+
+		/*For every building in the passed in building list, set its xPos to default, and its yPos to
+		the relevant position depending upon what position this building is in the building list.*/
+		for (int i = 0; i < buildings.Count; i++)
+		{
+			buildings[i].trans.parent = activityPanel;
+	
+			float yPos;
+			float xPos = 0;
+
+			switch(i)
+			{
+				case 0:
+					yPos = 100;
+					break;
+				case 1:
+					yPos = 0;
+					break;
+				case 2:
+					yPos = -100;
+					break;
+				default:
+					yPos = 100;
+					break;
+			}
+
+			buildings[i].trans.localPosition = new Vector2(xPos, yPos);
+		}
 	}
 
 	public static UI singleton = null;	//Singleton instance.
