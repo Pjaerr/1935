@@ -537,7 +537,7 @@ GameObject:
   - component: {fileID: 36663531}
   - component: {fileID: 36663530}
   m_Layer: 5
-  m_Name: MoneyText
+  m_Name: EconomyText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2281,18 +2281,18 @@ MonoBehaviour:
   - {fileID: 2144534514}
   - {fileID: 119177867}
   - {fileID: 1676855150}
+  nationText: {fileID: 910951378}
+  nationFlag: {fileID: 1090657899}
   provinceUI:
-  - {fileID: 837533704}
+  - {fileID: 1657444705}
   - {fileID: 1687997857}
   - {fileID: 129113901}
   - {fileID: 580292790}
-  - {fileID: 1657444705}
+  - {fileID: 837533704}
   - {fileID: 1258104606}
   - {fileID: 835068001}
   provinceUIParent: {fileID: 1964625967}
   provinceUIActive: 0
-  nationText: {fileID: 910951378}
-  nationFlag: {fileID: 1090657899}
   buildingUI: {fileID: 1386245184}
   buildings:
   - {fileID: 1271338201}
@@ -12908,7 +12908,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 15
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -12958,7 +12958,7 @@ GameObject:
   - component: {fileID: 1657444706}
   - component: {fileID: 1657444705}
   m_Layer: 5
-  m_Name: MoneyValue
+  m_Name: EconomyValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13501,7 +13501,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1709032668}
   m_Layer: 0
-  m_Name: Money
+  m_Name: Economy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14626,7 +14626,7 @@ GameObject:
   - component: {fileID: 1891448408}
   - component: {fileID: 1891448407}
   m_Layer: 5
-  m_Name: Money
+  m_Name: Economy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

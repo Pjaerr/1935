@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class ProvinceManagement : MonoBehaviour 
+public class ProvinceManagement : NetworkBehaviour 
 {
 	public List<Province> provinces;	//List of provinces belonging to this nation. Province objects.
 	
@@ -30,7 +31,7 @@ public class ProvinceManagement : MonoBehaviour
 
 		for (int i = 0; i < UI.singleton.buildings.Length; i++)
 		{
-			defaultBuildings.Add(new Building(UI.singleton.buildings[i]));
+			defaultBuildings.Add(new Building(UI.singleton.buildings[i], (Building.BuildingType)i));
 		}
 	}
 
@@ -62,6 +63,9 @@ public class ProvinceManagement : MonoBehaviour
 
 	void Update()
 	{
+		if (!isLocalPlayer)
+			return;
+
 		if (provinceIsClicked() && !UI.singleton.provinceUIActive)
 		{
 			UI.singleton.ActivateProvinceManagementUI(true);

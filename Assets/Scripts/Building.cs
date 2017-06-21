@@ -5,17 +5,22 @@ using UnityEngine.UI;
 
 public class Building
 {
+	/*Building Enumerator[s]*/
+	public enum BuildingType{Barracks, Refinery, Fortress};
+
 	private GameObject UI;	//The gameojbect that encapsulates the UI associated with this building.
 	public Transform trans;
+	public BuildingType buildingType;
 
 	/*0: Economy, 1: Food, 2: Iron, 3: Coal*/
 	private int[] modifiers = new int[4] {0, 0, 0, 0};	//Amt by which province values are changed.
 	private int[] cost = new int[4] {0, 0, 0, 0};
 
-	public Building(GameObject setUI)
+	public Building(GameObject setUI, BuildingType type)
 	{
 		UI = setUI;
 		trans = UI.GetComponent<Transform>();
+		buildingType = type;
 	}
 
 	///0: Economy, 1: Food, 2: Iron, 3: Coal
@@ -45,8 +50,6 @@ public class Building
 		{
 			adjustProvinceModifiers(province);	//Add this building's modifiers onto the province's modifiers.
 			Debug.Log(this.trans.name + " activated on " + province.name);
-
-			trans.GetChild(2).gameObject.SetActive(false);
 
 			return true;
 		}

@@ -44,7 +44,10 @@ public class PlayerManager : NetworkBehaviour
 		the PlayerManager has been started via the NetworkManager. This can be removed once
 		the starting of a game is seperated from the actual game scene itself.*/
 		
-		provinceManagement.NetworkStart();	
+		provinceManagement.NetworkStart();	//Delayed Province Management start.
+		Camera.main.GetComponent<CameraControl>().NetworkStart();	//Delayed Camera start.
+		UI.singleton.NetworkStart();	//Delayed UI start.
+
 		CmdSetAccessMatrixOfAllUnits();
 		unitControl.CmdSpawnUnit("infantryUnitV1", provinceManagement.provinces[1].trans.position, thisNation);
 	}

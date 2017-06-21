@@ -53,6 +53,10 @@ public class Unit : NetworkBehaviour
 	}
 	public void unitUpdate()
 	{
+		if (unitIsClicked() && !UI.singleton.provinceUIActive)
+		{
+			DisplayUnitUI(true);
+		}
 		if (pinActive)
 		{
 			PinPlacement();
@@ -63,12 +67,26 @@ public class Unit : NetworkBehaviour
 		}
 	}
 
-	/*Calls a function when mouse clicks on the collider attached to this.gameObject. */
-	void OnMouseDown()
-	{
-		DisplayUnitUI(true);
-	}
 
+	bool unitIsClicked()
+	{
+		bool isClicked = false;
+
+		if (Input.GetMouseButtonDown(0))
+		{
+			RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+			if (hit.collider != null)
+			{	
+				if (hit.transform == this.trans)
+				{
+					isClicked = true;
+				}
+			}
+		}
+
+		return isClicked;
+	}
+	
 	public void setParentNation(GameManager.Nation nation)
 	{
 		parentNation = nation;

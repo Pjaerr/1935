@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
 
 	public Nation thisNation;	//The nation of the client stored locally.
 
+
 	/*Nation Values*/
 	[HideInInspector] public float[] nationValues;
 
