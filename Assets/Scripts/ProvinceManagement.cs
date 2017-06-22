@@ -32,6 +32,11 @@ public class ProvinceManagement : NetworkBehaviour
 		for (int i = 0; i < UI.singleton.buildings.Length; i++)
 		{
 			defaultBuildings.Add(new Building(UI.singleton.buildings[i], (Building.BuildingType)i));
+
+			if (defaultBuildings[i].buildingType == Building.BuildingType.Refinery)
+			{
+				defaultBuildings[i].setModifiers(new int[4] {0, 100, 100, 100});
+			}
 		}
 	}
 
@@ -66,7 +71,7 @@ public class ProvinceManagement : NetworkBehaviour
 		if (!isLocalPlayer)
 			return;
 
-		if (provinceIsClicked() && !UI.singleton.provinceUIActive)
+		if (provinceIsClicked())
 		{
 			UI.singleton.ActivateProvinceManagementUI(true);
 			LoadProvinceValues();
@@ -102,26 +107,29 @@ public class ProvinceManagement : NetworkBehaviour
 	{
 		bool isClicked = false;
 
-		if (Input.GetMouseButtonDown(0))
+		if (!UI.singleton.provinceUIActive)
 		{
-			RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);	//Sends raycast from mouse.
-			if (hit.collider != null && hit.transform.parent != null)	//If it has hit something and what it has hit has a parent.
+			if (Input.GetMouseButtonDown(0))
 			{
-				if (hit.transform.IsChildOf(trans))	//Is the object a child of this nation.
+				RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);	//Sends raycast from mouse.
+				if (hit.collider != null && hit.transform.parent != null)	//If it has hit something and what it has hit has a parent.
 				{
-					isClicked = true;
-					for (int i = 0; i < provinces.Count; i++)
+					if (hit.transform.IsChildOf(trans))	//Is the object a child of this nation.
 					{
-						if (hit.transform.parent == provinces[i].trans)	//Checks which province the province point that was clicked is a child of.
+						isClicked = true;
+						for (int i = 0; i < provinces.Count; i++)
 						{
-							activeProvince = provinces[i];	//Sets that province as active.
-							break;
+							if (hit.transform.parent == provinces[i].trans)	//Checks which province the province point that was clicked is a child of.
+							{
+								activeProvince = provinces[i];	//Sets that province as active.
+								break;
+							}
 						}
 					}
 				}
 			}
 		}
-
+		
 		return isClicked;
 	}
 }

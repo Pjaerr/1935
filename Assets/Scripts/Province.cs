@@ -11,7 +11,7 @@ public class Province
 	/*These are the data values. value[0] is the actual value and value[1] is the amount
 	by which the first value will be changed every so often where:
 	0 = Economy, 1 = Food, 2 = Iron, 3 = Coal, 4 = Happiness, 5 = Population*/
-	public int[] values = new int[] {235, 402, -108, 0, 1, 3};
+	public int[] values = new int[] {0, 0, 0, 0, 0, 0};
 	public int[] modifiers = new int[] {0, 0, 0, 0, 0, 0};
 
 	public List<Building> inactiveBuildings = new List<Building>();
@@ -60,7 +60,6 @@ public class Province
 		}
 		else
 		{
-			building.onBuildingDeactivated(this);	//Remove modifier effects.
 			activeBuildings.Remove(building);
 			inactiveBuildings.Add(building);
 		}	

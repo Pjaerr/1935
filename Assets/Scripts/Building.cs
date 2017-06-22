@@ -34,14 +34,6 @@ public class Building
 		cost = valuesToSetBy;
 	}
 
-	public void onBuildingDeactivated(Province province)
-	{
-		for (int i = 0; i < modifiers.Length; i++)
-		{
-			province.modifiers[i] -= modifiers[i];	//Removes the modifiers given to the province.
-		}
-	}
-
 	/*Called when the building is activated, will evaluate the cost and if it evaluates to true
 	will adjust the province's modifiers and return true.*/
 	public bool onBuildingActivated(Province province)

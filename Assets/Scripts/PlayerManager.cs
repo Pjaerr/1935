@@ -68,7 +68,11 @@ public class PlayerManager : NetworkBehaviour
 			for (int i = 0; i < units.Count; i++)
 			{
 				Debug.Log("Setting access matrix for unit " + i);
-				units[i].RpcInitializeAccessMatrix();
+				if (units[i] != null)
+				{
+					units[i].RpcInitializeAccessMatrix();
+				}
+				
 			}
 		}
 	}
