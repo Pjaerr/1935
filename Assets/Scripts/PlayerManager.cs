@@ -72,7 +72,6 @@ public class PlayerManager : NetworkBehaviour
 				{
 					units[i].RpcInitializeAccessMatrix();
 				}
-				
 			}
 		}
 	}

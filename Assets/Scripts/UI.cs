@@ -126,10 +126,9 @@ public class UI : MonoBehaviour
 			}
 			
 
-			buildings[i].trans.parent = activityPanel;
+			buildings[i].trans.SetParent(activityPanel);
 	
 			float yPos;
-			float xPos = 0;
 
 			switch(i)
 			{
@@ -147,7 +146,7 @@ public class UI : MonoBehaviour
 					break;
 			}
 
-			buildings[i].trans.localPosition = new Vector2(xPos, yPos);
+			buildings[i].trans.localPosition = new Vector2(0, yPos);
 		}
 	}
 
@@ -179,7 +178,7 @@ public class UI : MonoBehaviour
 
 		for (int i = 0; i < provinceUI.Length - 1; i++)	//For every province UI element, not including name.
 		{
-			UpdateValue(activeProvince.values[i], provinceUI[i]);	//Update by active province values.
+			UpdateValue(activeProvince.getValues()[i], provinceUI[i]);	//Update by active province values.
 		}
 		
 		provinceUI[6].text = activeProvince.name;

@@ -1490,7 +1490,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.86764705, g: 0.1658737, b: 0.1658737, a: 1}
+  m_Color: {r: 0, g: 1, b: 0.2965517, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -11030,7 +11030,7 @@ GameObject:
   - component: {fileID: 1383110894}
   - component: {fileID: 1383110895}
   m_Layer: 0
-  m_Name: "\xC5lborg"
+  m_Name: Esbjerg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

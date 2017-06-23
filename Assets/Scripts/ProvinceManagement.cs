@@ -50,6 +50,9 @@ public class ProvinceManagement : NetworkBehaviour
 		for (int i = 0; i < trans.childCount; i++)
 		{
 			provinces.Add(new Province(trans.GetChild(i), defaultBuildings));
+			provinces[i].setModifiers(
+			new int[] {Random.Range(0, 2000), Random.Range(0, 500), Random.Range(0, 200), 
+			Random.Range(0, 200), Random.Range(0, 10), Random.Range(0, 10)});
 		}
 	}
 

@@ -40,7 +40,23 @@ public class Building
 	{
 		if (evaluateCost(province))	//If the province can afford this building.
 		{
-			adjustProvinceModifiers(province);	//Add this building's modifiers onto the province's modifiers.
+			switch (buildingType)
+			{
+				case BuildingType.Refinery:
+					adjustProvinceModifiers(province);	//Add this building's modifiers onto the province's modifiers.
+					break;
+
+				case BuildingType.Fortress:
+					province.strength += 20;
+					break;
+
+				case BuildingType.Barracks:
+					break;
+
+				default:
+					break;
+			}
+			
 			Debug.Log(this.trans.name + " activated on " + province.name);
 
 			return true;
@@ -57,7 +73,7 @@ public class Building
 	{
 		for (int i = 0; i < modifiers.Length; i++)
 		{
-			province.modifiers[i] += modifiers[i];
+			province.getModifiers()[i] += modifiers[i];
 		}
 	}
 
@@ -68,7 +84,7 @@ public class Building
 		for (int i = 0; i < cost.Length; i++)
 		{
 			/*For every province value that is more than the cost, increment isAffordable by 1. */
-			if (cost[i] <= province.values[i])
+			if (cost[i] <= province.getValues()[i])
 			{
 				isAffordable++;
 			}
@@ -82,7 +98,7 @@ public class Building
 			and set the return boolean to true to indicate the building has been 'purchased'*/
 			for (int i = 0; i < cost.Length; i++)
 			{
-				province.values[i] -= cost[i];
+				province.getValues()[i] -= cost[i];
 			}
 
 			return true;
