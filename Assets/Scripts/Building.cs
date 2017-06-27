@@ -23,6 +23,7 @@ public class Building
 		buildingType = type;
 	}
 
+
 	///0: Economy, 1: Food, 2: Iron, 3: Coal
 	public void setModifiers(int[] valuesToSetBy)
 	{

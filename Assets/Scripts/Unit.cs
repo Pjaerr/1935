@@ -6,6 +6,8 @@ using UnityEngine.Networking;
 
 public class Unit : NetworkBehaviour
 {
+	DataManager dataManager;
+
 	/*MOVEMENT*/
 	/*Movement speed for all units. Useful to set by default depending upon how quick the game should progress
 	and letting child units increase/decrease the default movementSpeed by a scaling factor as needed. */
@@ -45,9 +47,10 @@ public class Unit : NetworkBehaviour
 	public void unitStart()
 	{
 		RpcInitializeAccessMatrix();	//Allocate access for this unit to the client.
+		dataManager = GameManager.singleton.localClientObj.GetComponent<DataManager>();
 		trans = GetComponent<Transform>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
-		clientUnitControl = GameManager.singleton.client.GetComponent<UnitControl>();
+		clientUnitControl = GameManager.singleton.localClientObj.GetComponent<PlayerManager>().unitControl;
 		movementSpeed = GameManager.singleton.defaultUnitMovementSpeed * movementSpeedScalingFactor;
 		GameManager.singleton.units.Add(this);
 	}
@@ -140,7 +143,7 @@ public class Unit : NetworkBehaviour
 	public void RpcInitializeAccessMatrix()
 	{
 		/*If this unit belongs to the nation this client is currently registered as.*/
-		if (parentNation == GameManager.singleton.thisNation)
+		if (parentNation == dataManager.getThisNation())
 		{
 			UnitAccessMatrix(0);	//Give this client all access to this unit.
 		}

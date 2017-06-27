@@ -13,7 +13,7 @@ public class UI : MonoBehaviour
 	0 = Happiness, 1 = Economy, 2 = Food, 3 = Iron, 4 = Coal 
 	as assigned in the inspector.*/
 	[SerializeField] private Text[] persistentUI;
-	[SerializeField] Text nationText;	//The text that shows the name of the currently played nation.
+	public Text nationText;	//The text that shows the name of the currently played nation.
 	[SerializeField] Image nationFlag;	//The UI image that shows the flag of the currently played nation.
 
 	/*Province System UI*/
@@ -31,6 +31,9 @@ public class UI : MonoBehaviour
 	public GameObject[] buildings = new GameObject[3];	//The buildings. Barracks, Refinery & Fortress.
 	public GameObject activeBuildingsPanel;
 	public GameObject inactiveBuildingsPanel;
+
+
+	private DataManager dataManager;
 
 	public static UI singleton = null;	//Singleton instance.
 
@@ -59,17 +62,18 @@ public class UI : MonoBehaviour
 
 	public void NetworkStart()
 	{
+		dataManager = GameManager.singleton.localClientObj.GetComponent<DataManager>();
 		InitialisePersistentUI();
 	}
 	
 	/*Sets all default values for the persistent UI.*/
 	void InitialisePersistentUI()
 	{
-		nationText.text = GameManager.singleton.thisNation.ToString();
+		nationText.text = dataManager.getThisNation().ToString();
 		
 		for (int i = 0; i < persistentUI.Length; i++)
 		{
-			UpdateValue(GameManager.singleton.nationValues[i], persistentUI[i]);
+			UpdateValue(dataManager.getNationValues()[i], persistentUI[i]);
 		}
 		
 	}
@@ -80,7 +84,8 @@ public class UI : MonoBehaviour
 	that the enum that matched, belongs to.*/
 	public void activateBuilding(int index)
 	{
-		Building.BuildingType buildingType = (Building.BuildingType)index;	//Converts index to the corresponding BuildingType enum.
+		/*Converts index to the corresponding BuildingType enum.*/
+		Building.BuildingType buildingType = (Building.BuildingType)index;	
 
 		for (int i = 0; i < activeProvince.inactiveBuildings.Count; i++)
 		{

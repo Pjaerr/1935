@@ -6,18 +6,22 @@ using UnityEngine.Networking;
 public class ProvinceManagement : NetworkBehaviour 
 {
 	public List<Province> provinces;	//List of provinces belonging to this nation. Province objects.
-	
 	private Transform trans;	//This nations transform.
 	bool isRaised = false;	//Is the active province currently raised.
 	private Province activeProvince;	//The province that is currently active.
+
+	private DataManager dataManager;
 
 	/*TEMPORARY START METHOD, THIS IS ONLY IN PLACE WHILST STARTING A NETWORK AND THE GAME SCENE ARE THE SAME 
 	TO AVOID TRYING TO SET DATA WHEN IT DOESN'T EXIST.*/
 	public void NetworkStart()
 	{
-		trans = GameManager.singleton.thisNationTransform;
+		dataManager = GetComponent<DataManager>();
+
+		trans = dataManager.getThisNationTransform();
+
 		initialiseBuildings();
-		InitialiseProvinces();
+		initialiseProvinces();
 	}
 
 	/*The list of Building objects, by which the province objects will initialise their active and inactive lists. */
@@ -40,10 +44,12 @@ public class ProvinceManagement : NetworkBehaviour
 		}
 	}
 
+	
+
 	/*Takes the provinces list and for every child of this nation, create a new province 
 	assigning that child transform as the transform of the province object. Also passing
 	in the defaultBuildings list to every province object that is created.*/
-	void InitialiseProvinces()
+	void initialiseProvinces()
 	{
 		provinces = new List<Province>();
 
@@ -56,7 +62,6 @@ public class ProvinceManagement : NetworkBehaviour
 		}
 	}
 
-	
 	/*Will change the values on the local UI to match that of the currently
 	active province. This should be called when the province UI is activated.*/
 	private void LoadProvinceValues()
