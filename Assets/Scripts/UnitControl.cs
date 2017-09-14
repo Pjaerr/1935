@@ -23,6 +23,5 @@ public class UnitControl : NetworkBehaviour
 		GameObject go = (GameObject)Instantiate(Resources.Load(type, typeof(GameObject)), pos, Quaternion.identity);
 		go.GetComponent<Unit>().setParentNation(parentNation);
 		NetworkServer.Spawn(go);
-		Debug.Log("Spawning a unit......");
 	}
 }

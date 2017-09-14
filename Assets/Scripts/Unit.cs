@@ -6,8 +6,6 @@ using UnityEngine.Networking;
 
 public class Unit : NetworkBehaviour
 {
-	DataManager dataManager;
-
 	/*MOVEMENT*/
 	/*Movement speed for all units. Useful to set by default depending upon how quick the game should progress
 	and letting child units increase/decrease the default movementSpeed by a scaling factor as needed. */
@@ -47,19 +45,14 @@ public class Unit : NetworkBehaviour
 	public void unitStart()
 	{
 		RpcInitializeAccessMatrix();	//Allocate access for this unit to the client.
-		dataManager = GameManager.singleton.localClientObj.GetComponent<DataManager>();
 		trans = GetComponent<Transform>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
-		clientUnitControl = GameManager.singleton.localClientObj.GetComponent<PlayerManager>().unitControl;
+		clientUnitControl = GameManager.singleton.client.GetComponent<UnitControl>();
 		movementSpeed = GameManager.singleton.defaultUnitMovementSpeed * movementSpeedScalingFactor;
 		GameManager.singleton.units.Add(this);
 	}
 	public void unitUpdate()
 	{
-		if (unitIsClicked() && !UI.singleton.provinceUIActive)
-		{
-			DisplayUnitUI(true);
-		}
 		if (pinActive)
 		{
 			PinPlacement();
@@ -70,26 +63,12 @@ public class Unit : NetworkBehaviour
 		}
 	}
 
-
-	bool unitIsClicked()
+	/*Calls a function when mouse clicks on the collider attached to this.gameObject. */
+	void OnMouseDown()
 	{
-		bool isClicked = false;
-
-		if (Input.GetMouseButtonDown(0))
-		{
-			RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-			if (hit.collider != null)
-			{	
-				if (hit.transform == this.trans)
-				{
-					isClicked = true;
-				}
-			}
-		}
-
-		return isClicked;
+		DisplayUnitUI(true);
 	}
-	
+
 	public void setParentNation(GameManager.Nation nation)
 	{
 		parentNation = nation;
@@ -143,7 +122,7 @@ public class Unit : NetworkBehaviour
 	public void RpcInitializeAccessMatrix()
 	{
 		/*If this unit belongs to the nation this client is currently registered as.*/
-		if (parentNation == dataManager.getThisNation())
+		if (parentNation == GameManager.singleton.thisNation)
 		{
 			UnitAccessMatrix(0);	//Give this client all access to this unit.
 		}

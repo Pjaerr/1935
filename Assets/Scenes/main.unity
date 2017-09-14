@@ -537,7 +537,7 @@ GameObject:
   - component: {fileID: 36663531}
   - component: {fileID: 36663530}
   m_Layer: 5
-  m_Name: EconomyText
+  m_Name: MoneyText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -839,7 +839,7 @@ GameObject:
   - component: {fileID: 67136531}
   - component: {fileID: 67136532}
   m_Layer: 0
-  m_Name: Esbjerg
+  m_Name: "\xC5rhus"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1490,7 +1490,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0.2965517, a: 1}
+  m_Color: {r: 0.86764705, g: 0.1658737, b: 0.1658737, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1897,7 +1897,6 @@ GameObject:
   m_Component:
   - component: {fileID: 196779490}
   - component: {fileID: 196779489}
-  - component: {fileID: 196779491}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1916,11 +1915,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b849f74310833347bdc194a0aefc7a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clients: []
-  localClientObj: {fileID: 0}
   units: []
   defaultUnitMovementSpeed: 1
   WorldMap: {fileID: 260136365}
+  thisNationTransform: {fileID: 0}
+  thisNation: 13
+  nationValues: []
+  client: {fileID: 0}
 --- !u!4 &196779490
 Transform:
   m_ObjectHideFlags: 0
@@ -1934,38 +1935,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &196779491
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 196779488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 0
-    i1: 0
-    i2: 0
-    i3: 0
-    i4: 0
-    i5: 0
-    i6: 0
-    i7: 0
-    i8: 0
-    i9: 0
-    i10: 0
-    i11: 0
-    i12: 0
-    i13: 0
-    i14: 0
-    i15: 0
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
 --- !u!1 &203291417
 GameObject:
   m_ObjectHideFlags: 0
@@ -2312,18 +2281,18 @@ MonoBehaviour:
   - {fileID: 2144534514}
   - {fileID: 119177867}
   - {fileID: 1676855150}
-  nationText: {fileID: 910951378}
-  nationFlag: {fileID: 1090657899}
   provinceUI:
-  - {fileID: 1657444705}
+  - {fileID: 837533704}
   - {fileID: 1687997857}
   - {fileID: 129113901}
   - {fileID: 580292790}
-  - {fileID: 837533704}
+  - {fileID: 1657444705}
   - {fileID: 1258104606}
   - {fileID: 835068001}
   provinceUIParent: {fileID: 1964625967}
   provinceUIActive: 0
+  nationText: {fileID: 910951378}
+  nationFlag: {fileID: 1090657899}
   buildingUI: {fileID: 1386245184}
   buildings:
   - {fileID: 1271338201}
@@ -9292,11 +9261,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4375209818318820, guid: 50589eb28923ebf44804eb95fbd2ca05, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -23.9
+      value: -6.5
       objectReference: {fileID: 0}
     - target: {fileID: 4375209818318820, guid: 50589eb28923ebf44804eb95fbd2ca05, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3
+      value: 1.3
       objectReference: {fileID: 0}
     - target: {fileID: 4375209818318820, guid: 50589eb28923ebf44804eb95fbd2ca05, type: 2}
       propertyPath: m_LocalPosition.z
@@ -11061,7 +11030,7 @@ GameObject:
   - component: {fileID: 1383110894}
   - component: {fileID: 1383110895}
   m_Layer: 0
-  m_Name: "\xC5rhus"
+  m_Name: "\xC5lborg"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12939,7 +12908,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 15
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -12989,7 +12958,7 @@ GameObject:
   - component: {fileID: 1657444706}
   - component: {fileID: 1657444705}
   m_Layer: 5
-  m_Name: EconomyValue
+  m_Name: MoneyValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13532,7 +13501,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1709032668}
   m_Layer: 0
-  m_Name: Economy
+  m_Name: Money
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13680,11 +13649,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4375209818318820, guid: 50589eb28923ebf44804eb95fbd2ca05, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 24.8
+      value: -15.6
       objectReference: {fileID: 0}
     - target: {fileID: 4375209818318820, guid: 50589eb28923ebf44804eb95fbd2ca05, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -0.9
+      value: -8.2
       objectReference: {fileID: 0}
     - target: {fileID: 4375209818318820, guid: 50589eb28923ebf44804eb95fbd2ca05, type: 2}
       propertyPath: m_LocalPosition.z
@@ -14657,7 +14626,7 @@ GameObject:
   - component: {fileID: 1891448408}
   - component: {fileID: 1891448407}
   m_Layer: 5
-  m_Name: Economy
+  m_Name: Money
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

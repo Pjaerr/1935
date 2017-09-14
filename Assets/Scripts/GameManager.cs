@@ -4,56 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 
-public class GameManager : NetworkBehaviour 
+public class GameManager : MonoBehaviour 
 {
-	public List<GameObject> clients = new List<GameObject>();
-	public GameObject localClientObj;
-
-	public void setLocalClientObj(GameObject clientObj)
-	{
-		localClientObj = clientObj;
-	}
-
-	[Command]
-	public void CmdSetClient(GameObject clientObject)
-	{
-		Debug.Log("Setting client on server");
-		clients.Add(clientObject);
-	}
-
-	private GameObject findClientInList(GameObject clientObject)
-	{
-		for (int i = 0; i < clients.Count; i++)
-		{
-			if (clientObject == clients[i])
-			{
-				return clients[i];
-			}
-		}
-
-		return null;
-	}
-
-	[Command]
-	public void CmdUpdateValues(GameObject clientObj)
-	{
-		GameObject clientToUpdate = findClientInList(clientObj);
-
-		if (clientToUpdate != null)
-		{
-			RpcUpdateClient(clientToUpdate);
-		}
-	}
-
-	[ClientRpc]
-	private void RpcUpdateClient(GameObject newClientObj)
-	{
-		localClientObj = newClientObj;
-	}
-
-
-
 	public List<Unit> units;	//List of all units in the game, only used locally by the server.
+
+	public static bool networkIsConnected = false;
 
 	/*Default Attrbutes*/
 	public float defaultUnitMovementSpeed = 20.0f; //Default value to be set elsewhere as per time scaling.
@@ -61,14 +16,23 @@ public class GameManager : NetworkBehaviour
 	/*World Map*/
 	[SerializeField] private Transform WorldMap;
 	private Transform[] nations;
+	[HideInInspector] public Transform thisNationTransform;
 
 	/*Nation Enumerator[s]*/
 	public enum Nation{Austria, Belgium, Denmark, Finland, France, Germany, 
 	Netherlands, Norway, Poland, Portugal, Spain, Sweden, Switzerland, UK, SIreland};
 
+	public Nation thisNation;	//The nation of the client stored locally.
+
+	/*Nation Values*/
+	[HideInInspector] public float[] nationValues;
+
+	public GameObject client;
 
 	public static GameManager singleton = null;	//Singleton instance.
 	
+	
+
 	void InitializeSingleton()
 	{
 		//Check if an instance of NationManager already exists.
@@ -93,6 +57,15 @@ public class GameManager : NetworkBehaviour
 		SetWorldMap();
 	}
 
+	public void SetLocalValues(Nation thisNationNetworked, float[] nationValuesNetworked, GameObject playerManager)
+	{
+		client = playerManager;
+		thisNation = thisNationNetworked;
+		nationValues = nationValuesNetworked;
+		SetThisNationTransform();
+		networkIsConnected = true;
+	}
+
 	/*Grabs all children Transforms of the referenced WorldMap object 
 	and assigns them to an array of Transforms called nations[].*/
 	void SetWorldMap()
@@ -108,43 +81,58 @@ public class GameManager : NetworkBehaviour
 
 	/*Will set thisNationTransform to the transform in nations[] that represents the nation currently 
 	being played as. This can then be referenced by GameManager.singleton.thisNationTransform*/
-	public Transform findTransformOf(Nation thisNation)
+	void SetThisNationTransform()
 	{
 		switch (thisNation)
 		{
 			case Nation.Belgium:
-				return nations[1];
+				thisNationTransform = nations[1];
+				break;
 			case Nation.Netherlands:
-				return nations[2];
+				thisNationTransform = nations[2];
+				break;
 			case Nation.France:
-				return nations[3];
+				thisNationTransform = nations[3];
+				break;
 			case Nation.Switzerland:
-				return nations[4];
+				thisNationTransform = nations[4];
+				break;
 			case Nation.Germany:
-				return nations[5];
+				thisNationTransform = nations[5];
+				break;
 			case Nation.Austria:
-				return nations[6];
+				thisNationTransform = nations[6];
+				break;
 			case Nation.Denmark:
-				return nations[7];
+				thisNationTransform = nations[7];
+				break;
 			case Nation.Finland:
-				return nations[8];
+				thisNationTransform = nations[8];
+				break;
 			case Nation.UK:
-				return nations[9];
+				thisNationTransform = nations[9];
+				break;
 			case Nation.SIreland:
-				return nations[10];
+				thisNationTransform = nations[10];
+				break;
 			case Nation.Norway:
-				return nations[11];
+				thisNationTransform = nations[11];
+				break;
 			case Nation.Poland:
-				return nations[12];
+				thisNationTransform = nations[12];
+				break;
 			case Nation.Portugal:
-				return nations[13];
+				thisNationTransform = nations[13];
+				break;
 			case Nation.Spain:
-				return nations[14];
+				thisNationTransform = nations[14];
+				break;
 			case Nation.Sweden:
-				return nations[15];
+				thisNationTransform = nations[15];
+				break;
 			default:
 				Debug.Log("Unknown nation @ GameManager.cs::SetThisNation();");
-				return null;
+				break;
 		}
 	}
 }

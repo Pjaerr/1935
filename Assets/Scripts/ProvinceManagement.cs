@@ -1,27 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
 
-public class ProvinceManagement : NetworkBehaviour 
+public class ProvinceManagement : MonoBehaviour 
 {
 	public List<Province> provinces;	//List of provinces belonging to this nation. Province objects.
+	
 	private Transform trans;	//This nations transform.
 	bool isRaised = false;	//Is the active province currently raised.
 	private Province activeProvince;	//The province that is currently active.
-
-	private DataManager dataManager;
 
 	/*TEMPORARY START METHOD, THIS IS ONLY IN PLACE WHILST STARTING A NETWORK AND THE GAME SCENE ARE THE SAME 
 	TO AVOID TRYING TO SET DATA WHEN IT DOESN'T EXIST.*/
 	public void NetworkStart()
 	{
-		dataManager = GetComponent<DataManager>();
-
-		trans = dataManager.getThisNationTransform();
-
+		trans = GameManager.singleton.thisNationTransform;
 		initialiseBuildings();
-		initialiseProvinces();
+		InitialiseProvinces();
 	}
 
 	/*The list of Building objects, by which the province objects will initialise their active and inactive lists. */
@@ -35,33 +30,24 @@ public class ProvinceManagement : NetworkBehaviour
 
 		for (int i = 0; i < UI.singleton.buildings.Length; i++)
 		{
-			defaultBuildings.Add(new Building(UI.singleton.buildings[i], (Building.BuildingType)i));
-
-			if (defaultBuildings[i].buildingType == Building.BuildingType.Refinery)
-			{
-				defaultBuildings[i].setModifiers(new int[4] {0, 100, 100, 100});
-			}
+			defaultBuildings.Add(new Building(UI.singleton.buildings[i]));
 		}
 	}
-
-	
 
 	/*Takes the provinces list and for every child of this nation, create a new province 
 	assigning that child transform as the transform of the province object. Also passing
 	in the defaultBuildings list to every province object that is created.*/
-	void initialiseProvinces()
+	void InitialiseProvinces()
 	{
 		provinces = new List<Province>();
 
 		for (int i = 0; i < trans.childCount; i++)
 		{
 			provinces.Add(new Province(trans.GetChild(i), defaultBuildings));
-			provinces[i].setModifiers(
-			new int[] {Random.Range(0, 2000), Random.Range(0, 500), Random.Range(0, 200), 
-			Random.Range(0, 200), Random.Range(0, 10), Random.Range(0, 10)});
 		}
 	}
 
+	
 	/*Will change the values on the local UI to match that of the currently
 	active province. This should be called when the province UI is activated.*/
 	private void LoadProvinceValues()
@@ -76,10 +62,7 @@ public class ProvinceManagement : NetworkBehaviour
 
 	void Update()
 	{
-		if (!isLocalPlayer)
-			return;
-
-		if (provinceIsClicked())
+		if (provinceIsClicked() && !UI.singleton.provinceUIActive)
 		{
 			UI.singleton.ActivateProvinceManagementUI(true);
 			LoadProvinceValues();
@@ -115,29 +98,26 @@ public class ProvinceManagement : NetworkBehaviour
 	{
 		bool isClicked = false;
 
-		if (!UI.singleton.provinceUIActive)
+		if (Input.GetMouseButtonDown(0))
 		{
-			if (Input.GetMouseButtonDown(0))
+			RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);	//Sends raycast from mouse.
+			if (hit.collider != null && hit.transform.parent != null)	//If it has hit something and what it has hit has a parent.
 			{
-				RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);	//Sends raycast from mouse.
-				if (hit.collider != null && hit.transform.parent != null)	//If it has hit something and what it has hit has a parent.
+				if (hit.transform.IsChildOf(trans))	//Is the object a child of this nation.
 				{
-					if (hit.transform.IsChildOf(trans))	//Is the object a child of this nation.
+					isClicked = true;
+					for (int i = 0; i < provinces.Count; i++)
 					{
-						isClicked = true;
-						for (int i = 0; i < provinces.Count; i++)
+						if (hit.transform.parent == provinces[i].trans)	//Checks which province the province point that was clicked is a child of.
 						{
-							if (hit.transform.parent == provinces[i].trans)	//Checks which province the province point that was clicked is a child of.
-							{
-								activeProvince = provinces[i];	//Sets that province as active.
-								break;
-							}
+							activeProvince = provinces[i];	//Sets that province as active.
+							break;
 						}
 					}
 				}
 			}
 		}
-		
+
 		return isClicked;
 	}
 }

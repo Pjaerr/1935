@@ -8,35 +8,12 @@ public class Province
 	public Transform trans;
 	Transform provincePoint;
 
-	public int strength = 5;
 	/*These are the data values. value[0] is the actual value and value[1] is the amount
 	by which the first value will be changed every so often where:
 	0 = Economy, 1 = Food, 2 = Iron, 3 = Coal, 4 = Happiness, 5 = Population*/
-	private int[] values = new int[] {0, 0, 0, 0, 0, 0};
+	public int[] values = new int[] {0, 0, 0, 0, 0, 0};
+	public int[] modifiers = new int[] {0, 0, 0, 0, 0, 0};
 
-	///0 = Economy, 1 = Food, 2 = Iron, 3 = Coal, 4 = Happiness, 5 = Population
-	public int[] getValues()
-	{
-		return values;
-	}
-	///0 = Economy, 1 = Food, 2 = Iron, 3 = Coal, 4 = Happiness, 5 = Population
-	public void setValues(int[] arg)
-	{
-		values = arg;
-	}
-
-	private int[] modifiers = new int[] {0, 0, 0, 0, 0, 0};	
-
-	///0 = Economy, 1 = Food, 2 = Iron, 3 = Coal, 4 = Happiness, 5 = Population
-	public int[] getModifiers()
-	{
-		return modifiers;
-	}
-	///0 = Economy, 1 = Food, 2 = Iron, 3 = Coal, 4 = Happiness, 5 = Population
-	public void setModifiers(int[] arg)
-	{
-		modifiers = arg;
-	}
 	public List<Building> inactiveBuildings = new List<Building>();
 	public List<Building> activeBuildings = new List<Building>();
 
@@ -61,7 +38,6 @@ public class Province
 		}
 	}
 
-	//TODO: When values are updated, they should be updated on the network side, as well as locally.
 	public void UpdateValues()
 	{
 		for (int i = 0; i < values.Length; i++)
@@ -83,6 +59,7 @@ public class Province
 		}
 		else
 		{
+			building.onBuildingDeactivated(this);	//Remove modifier effects.
 			activeBuildings.Remove(building);
 			inactiveBuildings.Add(building);
 		}	

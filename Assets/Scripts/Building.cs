@@ -5,24 +5,18 @@ using UnityEngine.UI;
 
 public class Building
 {
-	/*Building Enumerator[s]*/
-	public enum BuildingType{Barracks, Refinery, Fortress};
-
 	private GameObject UI;	//The gameojbect that encapsulates the UI associated with this building.
 	public Transform trans;
-	public BuildingType buildingType;
 
 	/*0: Economy, 1: Food, 2: Iron, 3: Coal*/
 	private int[] modifiers = new int[4] {0, 0, 0, 0};	//Amt by which province values are changed.
 	private int[] cost = new int[4] {0, 0, 0, 0};
 
-	public Building(GameObject setUI, BuildingType type)
+	public Building(GameObject setUI)
 	{
 		UI = setUI;
 		trans = UI.GetComponent<Transform>();
-		buildingType = type;
 	}
-
 
 	///0: Economy, 1: Food, 2: Iron, 3: Coal
 	public void setModifiers(int[] valuesToSetBy)
@@ -35,30 +29,24 @@ public class Building
 		cost = valuesToSetBy;
 	}
 
+	public void onBuildingDeactivated(Province province)
+	{
+		for (int i = 0; i < modifiers.Length; i++)
+		{
+			province.modifiers[i] -= modifiers[i];	//Removes the modifiers given to the province.
+		}
+	}
+
 	/*Called when the building is activated, will evaluate the cost and if it evaluates to true
 	will adjust the province's modifiers and return true.*/
 	public bool onBuildingActivated(Province province)
 	{
 		if (evaluateCost(province))	//If the province can afford this building.
 		{
-			switch (buildingType)
-			{
-				case BuildingType.Refinery:
-					adjustProvinceModifiers(province);	//Add this building's modifiers onto the province's modifiers.
-					break;
-
-				case BuildingType.Fortress:
-					province.strength += 20;
-					break;
-
-				case BuildingType.Barracks:
-					break;
-
-				default:
-					break;
-			}
-			
+			adjustProvinceModifiers(province);	//Add this building's modifiers onto the province's modifiers.
 			Debug.Log(this.trans.name + " activated on " + province.name);
+
+			trans.GetChild(2).gameObject.SetActive(false);
 
 			return true;
 		}
@@ -74,7 +62,7 @@ public class Building
 	{
 		for (int i = 0; i < modifiers.Length; i++)
 		{
-			province.getModifiers()[i] += modifiers[i];
+			province.modifiers[i] += modifiers[i];
 		}
 	}
 
@@ -85,7 +73,7 @@ public class Building
 		for (int i = 0; i < cost.Length; i++)
 		{
 			/*For every province value that is more than the cost, increment isAffordable by 1. */
-			if (cost[i] <= province.getValues()[i])
+			if (cost[i] <= province.values[i])
 			{
 				isAffordable++;
 			}
@@ -99,7 +87,7 @@ public class Building
 			and set the return boolean to true to indicate the building has been 'purchased'*/
 			for (int i = 0; i < cost.Length; i++)
 			{
-				province.getValues()[i] -= cost[i];
+				province.values[i] -= cost[i];
 			}
 
 			return true;

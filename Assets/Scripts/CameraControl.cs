@@ -15,9 +15,7 @@ public class CameraControl : MonoBehaviour
 	Vector3 mousePos;
 	[SerializeField] float scrollSpeed = 2.0f;
 
-	private bool isReady = false;
-
-	public void NetworkStart()
+	void Start () 
 	{
 		thisCamera = GetComponent<Camera>();
 		trans = GetComponent<Transform>();
@@ -26,23 +24,21 @@ public class CameraControl : MonoBehaviour
 		as before the NetworkManager has started the game, the GameManager will not have any
 		values and will throw a NullReferenceException.This can be removed once the starting 
 		of a game is seperated from the actual game scene itself.*/
-		PanToNation();
-
-		isReady = true;
+		if (GameManager.networkIsConnected)
+		{
+			PanToNation();
+		}
 	}
 
 	void Update()
 	{
-		if (isReady)
-		{
-			CameraManipulation();
-		}
+		CameraManipulation();
 	}
 
 	/*Will move the camera to the current nation when called.*/
 	void PanToNation()
 	{
-		thisNationTransform = GameManager.singleton.localClientObj.GetComponent<DataManager>().getThisNationTransform();
+		thisNationTransform = GameManager.singleton.thisNationTransform;
 		trans.position = new Vector3(thisNationTransform.position.x, thisNationTransform.position.y, -10);
 	}
 
@@ -102,7 +98,7 @@ public class CameraControl : MonoBehaviour
 	}
 	void ZoomCamera()
 	{
-		if (Input.GetAxis("Mouse ScrollWheel") > 0 && thisCamera.orthographicSize > scrollSpeed)
+		if (Input.GetAxis("Mouse ScrollWheel") > 0 && thisCamera.orthographicSize > 2)
 		{
 			thisCamera.orthographicSize -= scrollSpeed;
 		}
