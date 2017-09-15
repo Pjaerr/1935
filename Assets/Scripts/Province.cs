@@ -8,8 +8,8 @@ public class Province
 	public Transform trans;
 	Transform provincePoint;
 
-	public ValueContainer values = new ValueContainer(new string[] {"economy", "food", "iron", "coal", "happiness", "population"});
-	public ValueContainer modifiers = new ValueContainer(new string[] {"economy", "food", "iron", "coal", "happiness", "population"});
+	public ValueContainer provinceValues;
+	public ValueContainer provinceValueModifiers;
 
 	public List<Building> inactiveBuildings = new List<Building>();
 	public List<Building> activeBuildings = new List<Building>();
@@ -18,6 +18,9 @@ public class Province
 	transform, it will automatically grab the provinces province point if it exists*/
 	public Province(Transform provinceTransform, List<Building> defaultBuildings)
 	{
+		provinceValues = new ValueContainer(new string[] {"economy", "food", "iron", "coal", "happiness", "population"}, new float[] {0, 0, 0, 0, 0, 0});
+		provinceValueModifiers = new ValueContainer(new string[] {"economy", "food", "iron", "coal", "happiness", "population"}, new float[] {0, 0, 0, 0, 0, 0});
+		
 		trans = provinceTransform;
 
 		if (provinceTransform.childCount > 0)
@@ -37,13 +40,9 @@ public class Province
 
 	public void UpdateValues()
 	{
-		int len = values.getAll().Count;
-
-		for (int i = 0; i < len; i++)
+		for (int i = 0; i < provinceValues.values.Count; i++)
 		{
-			string valueToChange = values.getValueLookup()[i];
-
-			values.set(valueToChange, modifiers.get(valueToChange));
+			provinceValues.values[i] += provinceValueModifiers.values[i];
 		}
 	}
 
