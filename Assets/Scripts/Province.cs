@@ -8,11 +8,8 @@ public class Province
 	public Transform trans;
 	Transform provincePoint;
 
-	/*These are the data values. value[0] is the actual value and value[1] is the amount
-	by which the first value will be changed every so often where:
-	0 = Economy, 1 = Food, 2 = Iron, 3 = Coal, 4 = Happiness, 5 = Population*/
 	public ValueContainer values = new ValueContainer(new string[] {"economy", "food", "iron", "coal", "happiness", "population"});
-	public int[] modifiers = new int[] {0, 0, 0, 0, 0, 0};
+	public ValueContainer modifiers = new ValueContainer(new string[] {"economy", "food", "iron", "coal", "happiness", "population"});
 
 	public List<Building> inactiveBuildings = new List<Building>();
 	public List<Building> activeBuildings = new List<Building>();
@@ -40,9 +37,13 @@ public class Province
 
 	public void UpdateValues()
 	{
-		for (int i = 0; i < values.Length; i++)
+		int len = values.getAll().Count;
+
+		for (int i = 0; i < len; i++)
 		{
-			values[i] += modifiers[i];
+			string valueToChange = values.getValueLookup()[i];
+
+			values.set(valueToChange, modifiers.get(valueToChange));
 		}
 	}
 

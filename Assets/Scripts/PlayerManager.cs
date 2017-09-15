@@ -10,13 +10,7 @@ public class PlayerManager : NetworkBehaviour
 	private ProvinceManagement provinceManagement;
 	private UnitControl unitControl;
 
-	/*This nations values in order of:
-	0 = Happiness
-	1 = Economy
-	2 = Food
-	3 = Iron
-	4 = Coal */
-	private float[] nationValues;
+	private ValueContainer nationValues = new ValueContainer(new string[] {"economy", "food", "iron", "coal"});
 
 	void Start() 
 	{
@@ -32,13 +26,13 @@ public class PlayerManager : NetworkBehaviour
 		thisNation = (GameManager.Nation)Random.Range(0, 14);
 		
 
-		nationValues = new float[5] {1, 1000, 500, 500, 500};	//Initialising the nation values.
+		nationValues.setAll(new float[5] {1, 1000, 500, 500, 500});	//Initialising the nation values.
 		
 		/*Storing a local copy of this player's data so that it can be accessed for
 		local use such as UI or Camera Control. As mentioned in the GameManager, the
 		locally stored data should never be used within anything that affects the where
 		other players are concerned.*/
-		GameManager.singleton.SetLocalValues(thisNation, nationValues, this.gameObject);
+		GameManager.singleton.SetLocalValues(thisNation, nationValues.getAll().ToArray(), this.gameObject);
 
 		/*Temporary function that delays the ProvinceManagement Start() functionality until
 		the PlayerManager has been started via the NetworkManager. This can be removed once

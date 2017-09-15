@@ -23,7 +23,7 @@ public class DataManager : NetworkBehaviour
 		thisNation = nationArg;
 		nationValues = new int[5] {1, 1000, 500, 500, 500};	//Initialising the nation values.
 
-		thisNationTransform = GameManager.singleton.findTransformOf(thisNation);
+		thisNationTransform = GameManager.singleton.thisNationTransform;
 	}
 
 	public void loadProvinces(List<Province> provincesArg)
