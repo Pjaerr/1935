@@ -6,48 +6,6 @@ using UnityEngine.Networking;
 
 public class GameManager : MonoBehaviour 
 {
-
-	public List<GameObject> clients = new List<GameObject>();
-
-	[Command]
-	public void CmdAddClientToList(GameObject clientObject)
-	{
-		Debug.Log("Adding client to list of clients on the server.");
-		clients.Add(clientObject);
-	}
-
-	private GameObject findClientInList(GameObject clientObject)	//Should only be called on the server.
-	{
-		for (int i = 0; i < clients.Count; i++)
-		{
-			if (clientObject == clients[i])
-			{
-				return clients[i];
-			}
-		}
-
-		return null;
-	}
-
-	[Command]
-	public void CmdUpdateValues(GameObject clientObj)
-	{
-		GameObject clientToUpdate = findClientInList(clientObj);
-
-		if (clientToUpdate != null)
-		{
-			RpcUpdateClient(clientToUpdate);
-		}
-	}
-
-	[ClientRpc]
-	private void RpcUpdateClient(GameObject newClientObj)
-	{
-		thisClient = newClientObj;
-	}
-
-
-
 	public List<Unit> units;	//List of all units in the game, only used locally by the server.
 
 	public static bool networkIsConnected = false;
@@ -71,7 +29,6 @@ public class GameManager : MonoBehaviour
 
 	void InitializeSingleton()
 	{
-		
 		if (singleton == null)	//Check if an instance of GameManager already exists.
 		{
 			singleton = this; 	//If not, make this that instance.
@@ -112,6 +69,6 @@ public class GameManager : MonoBehaviour
 
 	public Transform findTransformOf(Nation nation)
 	{
-		return nations[(int)nation];	//Returns the transform matching the position in the Nation enum of that passed in.
+		return nations[0];	//Returns the transform matching the position in the Nation enum of that passed in.
 	}
 }

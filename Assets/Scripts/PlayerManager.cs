@@ -34,6 +34,7 @@ public class PlayerManager : NetworkBehaviour
 		provinceManagement.NetworkStart();	
 		CmdSetAccessMatrixOfAllUnits();	//Set the access matrix for all units when new person joins.
 		unitControl.CmdSpawnUnit("infantryUnitV1", provinceManagement.provinces[1].trans.position, dataManager.getThisNation());
+		ServerStorage.singleton.CmdAddManagerToList(this.gameObject);
 	}
 
 	

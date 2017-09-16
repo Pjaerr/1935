@@ -33,7 +33,7 @@ public class Building
 	{
 		for (int i = 0; i < modifiers.Length; i++)
 		{
-			province.modifiers[i] -= modifiers[i];	//Removes the modifiers given to the province.
+			province.provinceValueModifiers.values[i] -= modifiers[i];	//Removes the modifiers given to the province.
 		}
 	}
 
@@ -62,7 +62,7 @@ public class Building
 	{
 		for (int i = 0; i < modifiers.Length; i++)
 		{
-			province.modifiers[i] += modifiers[i];
+			province.provinceValueModifiers.values[i] += modifiers[i];
 		}
 	}
 
@@ -73,7 +73,7 @@ public class Building
 		for (int i = 0; i < cost.Length; i++)
 		{
 			/*For every province value that is more than the cost, increment isAffordable by 1. */
-			if (cost[i] <= province.values[i])
+			if (cost[i] <= province.provinceValues.values[i])
 			{
 				isAffordable++;
 			}
@@ -87,7 +87,7 @@ public class Building
 			and set the return boolean to true to indicate the building has been 'purchased'*/
 			for (int i = 0; i < cost.Length; i++)
 			{
-				province.values[i] -= cost[i];
+				province.provinceValues.values[i] -= cost[i];
 			}
 
 			return true;

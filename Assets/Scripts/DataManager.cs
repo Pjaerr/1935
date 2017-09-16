@@ -11,8 +11,6 @@ public class DataManager : NetworkBehaviour
 
 	private ValueContainer nationValues;
 
-
-
 	public void initialiseData()
 	{
 		thisNation = (GameManager.Nation)Random.Range(0, 14);
@@ -28,13 +26,31 @@ public class DataManager : NetworkBehaviour
 		Debug.Log("Loaded Provinces into DataManager @ DataManager.cs::loadProvinces()");
 	}
 
-
-	public GameManager.Nation getThisNation()
+	public float[] getNationValues(bool isNetworked = false)
 	{
+		if (isNetworked)
+		{
+			ServerStorage.singleton.CmdUpdateValues(this.gameObject);
+		}
+
+		return nationValues.values.ToArray();
+	}
+	public GameManager.Nation getThisNation(bool isNetworked = false)
+	{
+		if (isNetworked)
+		{
+			ServerStorage.singleton.CmdUpdateValues(this.gameObject);
+		}
+
 		return thisNation;
 	}
-	public Transform getThisNationTransform()
+	public Transform getThisNationTransform(bool isNetworked = false)
 	{
+		if (isNetworked)
+		{
+			ServerStorage.singleton.CmdUpdateValues(this.gameObject);
+		}
+
 		return thisNationTransform;
 	}
 	

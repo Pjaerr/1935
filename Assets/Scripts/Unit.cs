@@ -47,7 +47,7 @@ public class Unit : NetworkBehaviour
 		RpcInitializeAccessMatrix();	//Allocate access for this unit to the client.
 		trans = GetComponent<Transform>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
-		clientUnitControl = GameManager.singleton.client.GetComponent<UnitControl>();
+		clientUnitControl = GameManager.singleton.thisClient.GetComponent<UnitControl>();
 		movementSpeed = GameManager.singleton.defaultUnitMovementSpeed * movementSpeedScalingFactor;
 		GameManager.singleton.units.Add(this);
 	}
@@ -122,7 +122,7 @@ public class Unit : NetworkBehaviour
 	public void RpcInitializeAccessMatrix()
 	{
 		/*If this unit belongs to the nation this client is currently registered as.*/
-		if (parentNation == GameManager.singleton.thisNation)
+		if (parentNation == GameManager.singleton.thisDataManager.getThisNation())
 		{
 			UnitAccessMatrix(0);	//Give this client all access to this unit.
 		}

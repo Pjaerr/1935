@@ -38,7 +38,7 @@ public class CameraControl : MonoBehaviour
 	/*Will move the camera to the current nation when called.*/
 	void PanToNation()
 	{
-		thisNationTransform = GameManager.singleton.thisNationTransform;
+		thisNationTransform = GameManager.singleton.thisDataManager.getThisNationTransform();
 		trans.position = new Vector3(thisNationTransform.position.x, thisNationTransform.position.y, -10);
 	}
 
