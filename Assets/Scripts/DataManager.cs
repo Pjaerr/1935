@@ -5,25 +5,21 @@ using UnityEngine.Networking;
 
 public class DataManager : NetworkBehaviour 
 {
-	[HideInInspector] public GameManager.Nation thisNation;	//This nations nation enum.
-	[HideInInspector] public Transform thisNationTransform;
-	[HideInInspector] public List<Province> provinces;
+	private GameManager.Nation thisNation;
+	private Transform thisNationTransform;
+	private List<Province> provinces;
 
-	/*This nations values in order of:
-	0 = Happiness, 1 = Economy, 2 = Food, 3 = Iron, 4 = Coal */
-	private int[] nationValues;
+	private ValueContainer nationValues;
 
-	void NetworkStart()
+
+
+	public void initialiseData()
 	{
-		
-	}
+		thisNation = (GameManager.Nation)Random.Range(0, 14);
+		nationValues = new ValueContainer(new string[] {"economy", "food", "iron", "coal"}, new float[] {1, 1000, 500, 500, 500});
 
-	public void initialiseData(GameManager.Nation nationArg)
-	{
-		thisNation = nationArg;
-		nationValues = new int[5] {1, 1000, 500, 500, 500};	//Initialising the nation values.
-
-		thisNationTransform = GameManager.singleton.thisNationTransform;
+		//Should grab the nation via order of enums and transforms**
+		thisNationTransform = GameManager.singleton.findTransformOf(thisNation);
 	}
 
 	public void loadProvinces(List<Province> provincesArg)
@@ -32,8 +28,17 @@ public class DataManager : NetworkBehaviour
 		Debug.Log("Loaded Provinces into DataManager @ DataManager.cs::loadProvinces()");
 	}
 
-	
+
+	public GameManager.Nation getThisNation()
+	{
+		return thisNation;
+	}
 	public Transform getThisNationTransform()
+	{
+		return thisNationTransform;
+	}
+	
+	/*public Transform getThisNationTransform()
 	{
 		GameManager.singleton.CmdUpdateValues(this.gameObject);
 		return thisNationTransform;
@@ -48,5 +53,5 @@ public class DataManager : NetworkBehaviour
 	{
 		GameManager.singleton.CmdUpdateValues(this.gameObject);
 		return nationValues;
-	}
+	}*/
 }

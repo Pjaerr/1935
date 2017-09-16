@@ -6,11 +6,10 @@ using UnityEngine.UI;
 
 public class PlayerManager : NetworkBehaviour 
 {
-	public GameManager.Nation thisNation;	//This nations nation enum.
+	public DataManager dataManager;
 	private ProvinceManagement provinceManagement;
 	private UnitControl unitControl;
-
-	private ValueContainer nationValues = new ValueContainer(new string[] {"economy", "food", "iron", "coal"});
+	
 
 	void Start() 
 	{
@@ -20,34 +19,24 @@ public class PlayerManager : NetworkBehaviour
 		{
 			return;
 		}
-		
-		initialiseReferences();
 
-		thisNation = (GameManager.Nation)Random.Range(0, 14);
-		
+		dataManager = GetComponent<DataManager>();
 
-		nationValues.setAll(new float[5] {1, 1000, 500, 500, 500});	//Initialising the nation values.
 		
-		/*Storing a local copy of this player's data so that it can be accessed for
-		local use such as UI or Camera Control. As mentioned in the GameManager, the
-		locally stored data should never be used within anything that affects the where
-		other players are concerned.*/
-		GameManager.singleton.SetLocalValues(thisNation, nationValues.getAll().ToArray(), this.gameObject);
+		/*Stores a local reference to this object so that other scripts can access this player's functions via the GameManager
+		singleton.*/
+		GameManager.singleton.setLocalClientReference(this.gameObject, dataManager);
 
 		/*Temporary function that delays the ProvinceManagement Start() functionality until
 		the PlayerManager has been started via the NetworkManager. This can be removed once
 		the starting of a game is seperated from the actual game scene itself.*/
 		
 		provinceManagement.NetworkStart();	
-		CmdSetAccessMatrixOfAllUnits();
-		unitControl.CmdSpawnUnit("infantryUnitV1", provinceManagement.provinces[1].trans.position, thisNation);
+		CmdSetAccessMatrixOfAllUnits();	//Set the access matrix for all units when new person joins.
+		unitControl.CmdSpawnUnit("infantryUnitV1", provinceManagement.provinces[1].trans.position, dataManager.getThisNation());
 	}
 
-	private void initialiseReferences()
-	{
-		provinceManagement = GetComponent<ProvinceManagement>();
-		unitControl = GetComponent<UnitControl>();
-	}
+	
 
 	[Command]
 	void CmdSetAccessMatrixOfAllUnits()

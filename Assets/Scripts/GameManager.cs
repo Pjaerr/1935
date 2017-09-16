@@ -6,6 +6,48 @@ using UnityEngine.Networking;
 
 public class GameManager : MonoBehaviour 
 {
+
+	public List<GameObject> clients = new List<GameObject>();
+
+	[Command]
+	public void CmdAddClientToList(GameObject clientObject)
+	{
+		Debug.Log("Adding client to list of clients on the server.");
+		clients.Add(clientObject);
+	}
+
+	private GameObject findClientInList(GameObject clientObject)	//Should only be called on the server.
+	{
+		for (int i = 0; i < clients.Count; i++)
+		{
+			if (clientObject == clients[i])
+			{
+				return clients[i];
+			}
+		}
+
+		return null;
+	}
+
+	[Command]
+	public void CmdUpdateValues(GameObject clientObj)
+	{
+		GameObject clientToUpdate = findClientInList(clientObj);
+
+		if (clientToUpdate != null)
+		{
+			RpcUpdateClient(clientToUpdate);
+		}
+	}
+
+	[ClientRpc]
+	private void RpcUpdateClient(GameObject newClientObj)
+	{
+		thisClient = newClientObj;
+	}
+
+
+
 	public List<Unit> units;	//List of all units in the game, only used locally by the server.
 
 	public static bool networkIsConnected = false;
@@ -16,53 +58,42 @@ public class GameManager : MonoBehaviour
 	/*World Map*/
 	[SerializeField] private Transform WorldMap;
 	private Transform[] nations;
-	[HideInInspector] public Transform thisNationTransform;
 
 	/*Nation Enumerator[s]*/
 	public enum Nation{Austria, Belgium, Denmark, Finland, France, Germany, 
 	Netherlands, Norway, Poland, Portugal, Spain, Sweden, Switzerland, UK, SIreland};
 
-	public Nation thisNation;	//The nation of the client stored locally.
-
-	/*Nation Values*/
-	[HideInInspector] public float[] nationValues;
-
-	public GameObject client;
+	[HideInInspector] public GameObject thisClient;
+	[HideInInspector] public DataManager thisDataManager;
 
 	public static GameManager singleton = null;	//Singleton instance.
-	
 	
 
 	void InitializeSingleton()
 	{
-		//Check if an instance of NationManager already exists.
-		if (singleton == null)
+		
+		if (singleton == null)	//Check if an instance of GameManager already exists.
 		{
-			//If not, make this that instance.
-			singleton = this;
+			singleton = this; 	//If not, make this that instance.
 		}
-		//If an instance already exists and it isn't this.
-		else if (singleton != this)
+		else if (singleton != this)	//If an instance already exists and it isn't this.
 		{
-			//Destroy this.
-			Destroy(gameObject);
+			Destroy(gameObject);	//Destroy this.
 		}
 
 		DontDestroyOnLoad(gameObject);
 	}
-	
+
 	void Awake()
 	{
 		InitializeSingleton();
 		SetWorldMap();
 	}
 
-	public void SetLocalValues(Nation thisNationNetworked, float[] nationValuesNetworked, GameObject playerManager)
+	public void setLocalClientReference(GameObject playerManager, DataManager dataManager)
 	{
-		client = playerManager;
-		thisNation = thisNationNetworked;
-		nationValues = nationValuesNetworked;
-		SetThisNationTransform();
+		thisClient = playerManager;
+		thisDataManager = dataManager;
 		networkIsConnected = true;
 	}
 
@@ -79,60 +110,8 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	/*Will set thisNationTransform to the transform in nations[] that represents the nation currently 
-	being played as. This can then be referenced by GameManager.singleton.thisNationTransform*/
-	void SetThisNationTransform()
+	public Transform findTransformOf(Nation nation)
 	{
-		switch (thisNation)
-		{
-			case Nation.Belgium:
-				thisNationTransform = nations[1];
-				break;
-			case Nation.Netherlands:
-				thisNationTransform = nations[2];
-				break;
-			case Nation.France:
-				thisNationTransform = nations[3];
-				break;
-			case Nation.Switzerland:
-				thisNationTransform = nations[4];
-				break;
-			case Nation.Germany:
-				thisNationTransform = nations[5];
-				break;
-			case Nation.Austria:
-				thisNationTransform = nations[6];
-				break;
-			case Nation.Denmark:
-				thisNationTransform = nations[7];
-				break;
-			case Nation.Finland:
-				thisNationTransform = nations[8];
-				break;
-			case Nation.UK:
-				thisNationTransform = nations[9];
-				break;
-			case Nation.SIreland:
-				thisNationTransform = nations[10];
-				break;
-			case Nation.Norway:
-				thisNationTransform = nations[11];
-				break;
-			case Nation.Poland:
-				thisNationTransform = nations[12];
-				break;
-			case Nation.Portugal:
-				thisNationTransform = nations[13];
-				break;
-			case Nation.Spain:
-				thisNationTransform = nations[14];
-				break;
-			case Nation.Sweden:
-				thisNationTransform = nations[15];
-				break;
-			default:
-				Debug.Log("Unknown nation @ GameManager.cs::SetThisNation();");
-				break;
-		}
+		return nations[(int)nation];	//Returns the transform matching the position in the Nation enum of that passed in.
 	}
 }

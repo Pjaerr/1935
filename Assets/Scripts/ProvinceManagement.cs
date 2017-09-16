@@ -14,9 +14,10 @@ public class ProvinceManagement : MonoBehaviour
 	TO AVOID TRYING TO SET DATA WHEN IT DOESN'T EXIST.*/
 	public void NetworkStart()
 	{
-		trans = GameManager.singleton.thisNationTransform;
+		trans = GameManager.singleton.thisDataManager.getThisNationTransform();
 		initialiseBuildings();
 		InitialiseProvinces();
+		GameManager.singleton.thisDataManager.loadProvinces(provinces);
 	}
 
 	/*The list of Building objects, by which the province objects will initialise their active and inactive lists. */
