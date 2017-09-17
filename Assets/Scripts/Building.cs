@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class Building
 {
+	public enum BuildingType {Barracks, Refinery, Fortress};
+
+	public BuildingType buildingType;
+	
 	private GameObject UI;	//The gameojbect that encapsulates the UI associated with this building.
 	public Transform trans;
 
